@@ -113,12 +113,14 @@ export default function Search() {
     const matchesIndustry = selectedIndustries.length === 0 ||
       (user.industry && selectedIndustries.includes(user.industry));
       
-    // Filter by experience
-    const matchesExperience = selectedExperience === "" ||
+    // Filter by experience - treat "any-experience" as no filter
+    const matchesExperience = selectedExperience === "" || 
+      selectedExperience === "any-experience" ||
       (user.experience && user.experience === selectedExperience);
       
-    // Filter by location
-    const matchesLocation = selectedLocation === "" ||
+    // Filter by location - treat "any-location" as no filter
+    const matchesLocation = selectedLocation === "" || 
+      selectedLocation === "any-location" ||
       (user.location && user.location === selectedLocation);
 
     return matchesSearch && matchesRole && matchesExpertise && 

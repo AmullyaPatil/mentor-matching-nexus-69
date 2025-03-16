@@ -82,13 +82,14 @@ export default function SearchFilters({
   const clearFilters = () => {
     onRoleChange([]);
     onExpertiseChange([]);
-    onLocationChange("");
-    onExperienceChange("");
+    onLocationChange("any-location");
+    onExperienceChange("any-experience");
     onIndustryChange([]);
   };
 
   const hasActiveFilters = selectedRoles.length > 0 || selectedExpertise.length > 0 || 
-                           selectedLocation !== "" || selectedExperience !== "" || 
+                           (selectedLocation !== "" && selectedLocation !== "any-location") || 
+                           (selectedExperience !== "" && selectedExperience !== "any-experience") || 
                            selectedIndustry.length > 0;
 
   return (
@@ -194,6 +195,23 @@ export default function SearchFilters({
                 ))}
               </SelectContent>
             </Select>
+            
+            {selectedLocation && selectedLocation !== "any-location" && (
+              <div className="mt-2 flex flex-wrap gap-2">
+                <Badge
+                  variant="secondary"
+                  className="bg-teal-100 text-teal-700 hover:bg-teal-200"
+                >
+                  <span>{selectedLocation}</span>
+                  <button
+                    onClick={() => onLocationChange("any-location")}
+                    className="ml-1 hover:text-teal-900"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              </div>
+            )}
           </div>
           
           {/* Experience filter */}
@@ -211,6 +229,23 @@ export default function SearchFilters({
                 ))}
               </SelectContent>
             </Select>
+            
+            {selectedExperience && selectedExperience !== "any-experience" && (
+              <div className="mt-2 flex flex-wrap gap-2">
+                <Badge
+                  variant="secondary"
+                  className="bg-teal-100 text-teal-700 hover:bg-teal-200"
+                >
+                  <span>{selectedExperience}</span>
+                  <button
+                    onClick={() => onExperienceChange("any-experience")}
+                    className="ml-1 hover:text-teal-900"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              </div>
+            )}
           </div>
           
           {/* Industry filter */}
