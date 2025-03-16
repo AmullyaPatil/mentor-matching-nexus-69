@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -13,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "@/hooks/use-toast";
 import { Filter, X, Search as SearchIcon } from "lucide-react";
+import SearchFilters from "@/components/SearchFilters";
 
 // Expertise options
 const expertiseOptions = [
@@ -49,7 +49,6 @@ export default function Search() {
   const [selectedExperience, setSelectedExperience] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const [wishlisted, setWishlisted] = useState<string[]>([]);
-  const [showFilters, setShowFilters] = useState(false);
 
   // Load wishlisted items from localStorage
   useEffect(() => {
@@ -198,7 +197,7 @@ export default function Search() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="max-w-3xl mx-auto mb-4"
+              className="max-w-3xl mx-auto mb-6"
             >
               <div className="relative">
                 <Input
@@ -220,196 +219,30 @@ export default function Search() {
               </div>
             </motion.div>
             
+            {/* Horizontal filters below search bar */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex justify-center mb-8"
+              className="max-w-5xl mx-auto mb-8"
             >
-              <Button 
-                size="sm" 
-                variant="outline" 
-                onClick={() => setShowFilters(!showFilters)}
-                className="rounded-full bg-white text-teal-600 border-teal-200"
-              >
-                <Filter className="h-5 w-5 mr-1" />
-                Filters {hasActiveFilters && `(${selectedRoles.length + selectedExpertise.length + selectedIndustries.length + (selectedExperience ? 1 : 0) + (selectedLocation ? 1 : 0)})`}
-              </Button>
+              <SearchFilters
+                selectedRoles={selectedRoles}
+                onRoleChange={setSelectedRoles}
+                selectedExpertise={selectedExpertise}
+                onExpertiseChange={setSelectedExpertise}
+                availableExpertise={expertiseOptions}
+                selectedLocation={selectedLocation}
+                onLocationChange={setSelectedLocation}
+                selectedExperience={selectedExperience}
+                onExperienceChange={setSelectedExperience}
+                selectedIndustry={selectedIndustries}
+                onIndustryChange={setSelectedIndustries}
+                availableLocations={locationOptions}
+                availableExperience={experienceLevels}
+                availableIndustries={industryOptions}
+              />
             </motion.div>
-
-            {/* Horizontal filters */}
-            {showFilters && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white rounded-xl shadow-md p-6 max-w-5xl mx-auto mb-8"
-              >
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="font-medium text-lg">Filters</h3>
-                  {hasActiveFilters && (
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      onClick={clearAllFilters}
-                      className="text-teal-600 hover:text-teal-800 hover:bg-teal-50"
-                    >
-                      <X className="h-4 w-4 mr-1" />
-                      Clear all
-                    </Button>
-                  )}
-                </div>
-                
-                <div className="space-y-6">
-                  {/* Role filter */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-3 text-gray-700">Role</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {Object.values(UserRole).map(role => (
-                        <Badge
-                          key={role}
-                          variant={selectedRoles.includes(role) ? "default" : "outline"}
-                          className={`cursor-pointer ${
-                            selectedRoles.includes(role) 
-                              ? "bg-teal-100 text-teal-800 hover:bg-teal-200 border-teal-200" 
-                              : "bg-white hover:bg-gray-100 text-gray-800"
-                          }`}
-                          onClick={() => toggleRole(role)}
-                        >
-                          {USER_ROLE_LABELS[role]}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Expertise filter */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-3 text-gray-700">Expertise</h4>
-                    <div className="flex flex-wrap gap-2">
-                      <Select
-                        value=""
-                        onValueChange={(value) => toggleFilter(value, selectedExpertise, setSelectedExpertise)}
-                      >
-                        <SelectTrigger className="w-[200px] border-teal-200 focus:ring-teal-400 h-9">
-                          <SelectValue placeholder="Select expertise" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {expertiseOptions.map(option => (
-                            <SelectItem 
-                              key={option} 
-                              value={option}
-                              className={selectedExpertise.includes(option) ? "bg-teal-50 text-teal-700" : ""}
-                            >
-                              {option}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      
-                      {selectedExpertise.map(expertise => (
-                        <Badge
-                          key={expertise}
-                          variant="default"
-                          className="bg-teal-100 text-teal-800 hover:bg-teal-200 border-teal-200"
-                        >
-                          {expertise}
-                          <button 
-                            className="ml-1 hover:text-teal-600" 
-                            onClick={() => toggleFilter(expertise, selectedExpertise, setSelectedExpertise)}
-                          >
-                            <X className="h-3 w-3" />
-                          </button>
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Industry filter */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-3 text-gray-700">Industry</h4>
-                    <div className="flex flex-wrap gap-2">
-                      <Select
-                        value=""
-                        onValueChange={(value) => toggleFilter(value, selectedIndustries, setSelectedIndustries)}
-                      >
-                        <SelectTrigger className="w-[200px] border-teal-200 focus:ring-teal-400 h-9">
-                          <SelectValue placeholder="Select industry" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {industryOptions.map(option => (
-                            <SelectItem 
-                              key={option} 
-                              value={option}
-                              className={selectedIndustries.includes(option) ? "bg-teal-50 text-teal-700" : ""}
-                            >
-                              {option}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      
-                      {selectedIndustries.map(industry => (
-                        <Badge
-                          key={industry}
-                          variant="default"
-                          className="bg-teal-100 text-teal-800 hover:bg-teal-200 border-teal-200"
-                        >
-                          {industry}
-                          <button 
-                            className="ml-1 hover:text-teal-600" 
-                            onClick={() => toggleFilter(industry, selectedIndustries, setSelectedIndustries)}
-                          >
-                            <X className="h-3 w-3" />
-                          </button>
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Experience and Location on same row */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Experience filter */}
-                    <div>
-                      <h4 className="text-sm font-medium mb-3 text-gray-700">Experience</h4>
-                      <Select
-                        value={selectedExperience}
-                        onValueChange={setSelectedExperience}
-                      >
-                        <SelectTrigger className="w-full border-teal-200 focus:ring-teal-400">
-                          <SelectValue placeholder="Select experience level" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="">Any experience</SelectItem>
-                          {experienceLevels.map(level => (
-                            <SelectItem key={level} value={level}>{level}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    {/* Location filter */}
-                    <div>
-                      <h4 className="text-sm font-medium mb-3 text-gray-700">Location</h4>
-                      <Select
-                        value={selectedLocation}
-                        onValueChange={setSelectedLocation}
-                      >
-                        <SelectTrigger className="w-full border-teal-200 focus:ring-teal-400">
-                          <SelectValue placeholder="Select location" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="">Any location</SelectItem>
-                          {locationOptions.map(location => (
-                            <SelectItem key={location} value={location}>{location}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
           </div>
         </section>
 
