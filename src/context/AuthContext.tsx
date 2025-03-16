@@ -1,7 +1,6 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { UserRole } from "@/lib/constants";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "@/hooks/use-toast";
 
 interface User {
   id: string;
@@ -26,7 +25,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -38,10 +36,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Mock user for demonstration
       const loggedInUser = {
         id: "mock-id-123",
         name: "Demo User",
@@ -66,10 +62,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Mock user for demonstration
       const newUser = {
         id: "mock-id-" + Math.random().toString(36).substr(2, 9),
         name,
