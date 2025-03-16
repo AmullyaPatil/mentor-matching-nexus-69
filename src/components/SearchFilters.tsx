@@ -107,7 +107,7 @@ export default function SearchFilters({
                   <SelectItem 
                     key={role} 
                     value={role}
-                    onSelect={() => handleRoleChange(role)}
+                    onClick={() => handleRoleChange(role)}
                     className={selectedRoles.includes(role) ? "bg-teal-50 text-teal-700" : ""}
                   >
                     {USER_ROLE_LABELS[role]}
@@ -149,7 +149,7 @@ export default function SearchFilters({
                   <SelectItem 
                     key={expertise} 
                     value={expertise}
-                    onSelect={() => handleExpertiseChange(expertise)}
+                    onClick={() => handleExpertiseChange(expertise)}
                     className={selectedExpertise.includes(expertise) ? "bg-teal-50 text-teal-700" : ""}
                   >
                     {expertise}
@@ -187,7 +187,8 @@ export default function SearchFilters({
                 <SelectValue placeholder="Select location" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Any location</SelectItem>
+                {/* Use placeholder value with a non-empty string */}
+                <SelectItem value="any-location">Any location</SelectItem>
                 {availableLocations.map(location => (
                   <SelectItem key={location} value={location}>{location}</SelectItem>
                 ))}
@@ -203,7 +204,8 @@ export default function SearchFilters({
                 <SelectValue placeholder="Years of experience" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Any experience</SelectItem>
+                {/* Use placeholder value with a non-empty string */}
+                <SelectItem value="any-experience">Any experience</SelectItem>
                 {availableExperience.map(exp => (
                   <SelectItem key={exp} value={exp}>{exp}</SelectItem>
                 ))}
@@ -223,7 +225,7 @@ export default function SearchFilters({
                   <SelectItem 
                     key={industry} 
                     value={industry}
-                    onSelect={() => handleIndustryChange(industry)}
+                    onClick={() => handleIndustryChange(industry)}
                     className={selectedIndustry.includes(industry) ? "bg-teal-50 text-teal-700" : ""}
                   >
                     {industry}

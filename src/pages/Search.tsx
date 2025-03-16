@@ -1,17 +1,16 @@
+
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { MOCK_USERS } from "@/lib/constants";
 import ProfileCard from "@/components/ProfileCard";
-import { UserRole, USER_ROLE_LABELS } from "@/lib/constants";
+import { UserRole } from "@/lib/constants";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SearchIcon } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "@/hooks/use-toast";
-import { Filter, X, Search as SearchIcon } from "lucide-react";
 import SearchFilters from "@/components/SearchFilters";
 
 // Expertise options
@@ -90,24 +89,6 @@ export default function Search() {
     });
   };
 
-  // Helper function to add/remove filter
-  const toggleFilter = (value: string, currentFilters: string[], setFilters: React.Dispatch<React.SetStateAction<string[]>>) => {
-    if (currentFilters.includes(value)) {
-      setFilters(currentFilters.filter(item => item !== value));
-    } else {
-      setFilters([...currentFilters, value]);
-    }
-  };
-
-  // Helper function to handle role toggle
-  const toggleRole = (role: UserRole) => {
-    if (selectedRoles.includes(role)) {
-      setSelectedRoles(selectedRoles.filter(r => r !== role));
-    } else {
-      setSelectedRoles([...selectedRoles, role]);
-    }
-  };
-
   // Filter users based on all filters
   const filteredUsers = MOCK_USERS.filter((user) => {
     // Search by name, bio, or expertise
@@ -157,20 +138,6 @@ export default function Search() {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 }
   };
-
-  // Clear all filters
-  const clearAllFilters = () => {
-    setSelectedRoles([]);
-    setSelectedExpertise([]);
-    setSelectedIndustries([]);
-    setSelectedExperience("");
-    setSelectedLocation("");
-    setSearchQuery("");
-  };
-
-  const hasActiveFilters = selectedRoles.length > 0 || selectedExpertise.length > 0 || 
-                          selectedIndustries.length > 0 || selectedExperience !== "" || 
-                          selectedLocation !== "";
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
