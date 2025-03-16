@@ -13,6 +13,8 @@ import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import ProfileView from "./pages/ProfileView";
+import Wishlist from "./pages/Wishlist";
+import KnowledgeHub from "./pages/KnowledgeHub";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +33,8 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/profiles/:id" element={<ProfileView />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/knowledge-hub" element={<KnowledgeHub />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -2,13 +2,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { NAV_ITEMS } from "@/lib/constants";
 import { useAuth } from "@/context/AuthContext";
 import { 
   UserCircle, 
   Menu,
   X,
-  ChevronDown 
+  ChevronDown,
+  Heart,
+  BookOpen
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -18,6 +19,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+// Updated nav items
+const NAV_ITEMS = [
+  { path: "/search", name: "Find Connections" },
+  { path: "/community", name: "Community" },
+  { path: "/knowledge-hub", name: "Knowledge Hub" },
+];
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -49,7 +57,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="h-10 w-10 rounded-lg bg-black flex items-center justify-center transition-transform duration-500 group-hover:rotate-6">
+            <div className="h-10 w-10 rounded-lg bg-teal-600 flex items-center justify-center transition-transform duration-500 group-hover:rotate-6">
               <span className="text-white font-display text-lg font-semibold">SG</span>
             </div>
             <span className="font-display text-xl font-medium">Startup Growth</span>
@@ -63,8 +71,8 @@ export default function Navbar() {
                   to={item.path}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     location.pathname === item.path
-                      ? "bg-primary text-foreground"
-                      : "text-foreground/70 hover:text-foreground hover:bg-primary/50"
+                      ? "bg-teal-100 text-teal-700"
+                      : "text-foreground/70 hover:text-foreground hover:bg-teal-50"
                   }`}
                 >
                   {item.name}
@@ -105,6 +113,12 @@ export default function Navbar() {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
+                    <Link to="/wishlist" className="w-full cursor-pointer flex items-center">
+                      <Heart className="h-4 w-4 mr-2" />
+                      Wishlist
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link to="/profile" className="w-full cursor-pointer">
                       Profile
                     </Link>
@@ -123,7 +137,7 @@ export default function Navbar() {
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/auth">Log In</Link>
                 </Button>
-                <Button asChild size="sm">
+                <Button asChild size="sm" className="bg-teal-600 hover:bg-teal-700">
                   <Link to="/auth?signup=true">Sign Up</Link>
                 </Button>
               </div>
@@ -155,8 +169,8 @@ export default function Navbar() {
                   to={item.path}
                   className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${
                     location.pathname === item.path
-                      ? "bg-primary text-foreground"
-                      : "text-foreground/70 hover:text-foreground hover:bg-primary/50"
+                      ? "bg-teal-100 text-teal-700"
+                      : "text-foreground/70 hover:text-foreground hover:bg-teal-50"
                   }`}
                 >
                   {item.name}
@@ -166,13 +180,13 @@ export default function Navbar() {
                 <>
                   <Link
                     to="/auth"
-                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-primary/50"
+                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-teal-50"
                   >
                     Log In
                   </Link>
                   <Link
                     to="/auth?signup=true"
-                    className="px-4 py-3 rounded-md text-sm font-medium bg-black text-white hover:bg-black/90"
+                    className="px-4 py-3 rounded-md text-sm font-medium bg-teal-600 text-white hover:bg-teal-700"
                   >
                     Sign Up
                   </Link>
@@ -181,8 +195,21 @@ export default function Navbar() {
               {user && (
                 <>
                   <Link
+                    to="/dashboard"
+                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-teal-50"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/wishlist"
+                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-teal-50 flex items-center"
+                  >
+                    <Heart className="h-4 w-4 mr-2" />
+                    Wishlist
+                  </Link>
+                  <Link
                     to="/profile"
-                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-primary/50"
+                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-teal-50"
                   >
                     Profile
                   </Link>

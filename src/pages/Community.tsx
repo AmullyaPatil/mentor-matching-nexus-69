@@ -5,14 +5,17 @@ import Footer from "@/components/Footer";
 import { MOCK_POSTS, MOCK_USERS } from "@/lib/constants";
 import Post from "@/components/Post";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { UserRole } from "@/lib/constants";
 import { useAuth } from "@/context/AuthContext";
+import { Search } from "lucide-react";
 
 export default function Community() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<'featured' | 'recent' | 'popular'>('featured');
   const [postContent, setPostContent] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleTabChange = (tab: 'featured' | 'recent' | 'popular') => {
     setActiveTab(tab);
@@ -36,8 +39,20 @@ export default function Community() {
     setPostContent('');
   };
 
-  // Filter posts based on active tab
+  // Filter posts based on active tab and search query
   let filteredPosts = [...MOCK_POSTS];
+  
+  // Filter by search query
+  if (searchQuery.trim()) {
+    const query = searchQuery.toLowerCase();
+    filteredPosts = filteredPosts.filter(post => 
+      post.content.toLowerCase().includes(query) || 
+      post.author.name.toLowerCase().includes(query) ||
+      (post.tags && post.tags.some(tag => tag.toLowerCase().includes(query)))
+    );
+  }
+  
+  // Sort based on active tab
   if (activeTab === 'recent') {
     filteredPosts.sort((a, b) => 
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -60,6 +75,18 @@ export default function Community() {
               <p className="text-lg text-muted-foreground">
                 Connect, share knowledge, and grow with other startup enthusiasts
               </p>
+            </div>
+            
+            {/* Search Bar */}
+            <div className="max-w-2xl mx-auto relative mb-6">
+              <Input
+                type="text"
+                placeholder="Search posts, topics, or keywords..."
+                className="pl-10 h-12 rounded-full border-teal-200 focus:border-teal-400 focus:ring focus:ring-teal-300 focus:ring-opacity-50"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-teal-500 h-5 w-5" />
             </div>
           </div>
         </section>
@@ -129,12 +156,25 @@ export default function Community() {
                   </div>
                 </div>
 
+                {/* Search results counter when searching */}
+                {searchQuery.trim() && (
+                  <div className="mb-4 text-sm text-gray-500">
+                    Found {filteredPosts.length} results for "{searchQuery}"
+                  </div>
+                )}
+
                 {/* Posts */}
-                <div className="space-y-6">
-                  {filteredPosts.map((post) => (
-                    <Post key={post.id} post={post} />
-                  ))}
-                </div>
+                {filteredPosts.length > 0 ? (
+                  <div className="space-y-6">
+                    {filteredPosts.map((post) => (
+                      <Post key={post.id} post={post} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8 border border-dashed border-gray-200 rounded-lg">
+                    <p className="text-gray-500">No posts found matching your search criteria</p>
+                  </div>
+                )}
               </div>
 
               {/* Sidebar */}
