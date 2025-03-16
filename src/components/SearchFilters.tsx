@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { X, Filter, ChevronDown, ChevronUp } from "lucide-react";
 
-interface SearchFiltersProps {
+export interface SearchFiltersProps {
   selectedRoles: UserRole[];
   onRoleChange: (roles: UserRole[]) => void;
   selectedExpertise: string[];
@@ -86,17 +86,17 @@ export default function SearchFilters({
   const hasActiveFilters = selectedRoles.length > 0 || selectedExpertise.length > 0;
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+    <div className="bg-white rounded-xl border border-border shadow-sm overflow-hidden gradient-border">
       <div className="p-4 sm:p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-medium font-display">Filters</h3>
+          <h3 className="text-lg font-medium font-display gradient-text">Filters</h3>
           <div className="flex items-center">
             {hasActiveFilters && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={clearFilters}
-                className="text-sm mr-2"
+                className="text-sm mr-2 text-highlight hover:text-highlight/80 hover:bg-highlight/10"
               >
                 <X className="h-4 w-4 mr-1" />
                 Clear all
@@ -105,7 +105,7 @@ export default function SearchFilters({
             <Button
               variant="ghost"
               size="sm"
-              className="lg:hidden"
+              className="lg:hidden text-highlight hover:text-highlight/80 hover:bg-highlight/10"
               onClick={() => setExpanded(!expanded)}
             >
               <Filter className="h-4 w-4 mr-1" />
@@ -120,7 +120,7 @@ export default function SearchFilters({
 
         <div className="space-y-6 lg:space-y-4">
           <div className={`${expanded ? "block" : "hidden lg:block"}`}>
-            <Label className="mb-2 block">Role</Label>
+            <Label className="mb-2 block font-medium text-sm text-foreground/80">Role</Label>
             <div className="space-y-2">
               {Object.values(UserRole).map((role) => (
                 <div key={role} className="flex items-center space-x-2">
@@ -128,6 +128,7 @@ export default function SearchFilters({
                     id={`role-${role}`}
                     checked={selectedRoles.includes(role)}
                     onCheckedChange={() => handleRoleChange(role)}
+                    className="text-highlight border-muted-foreground/30 data-[state=checked]:bg-highlight data-[state=checked]:text-white"
                   />
                   <Label
                     htmlFor={`role-${role}`}
@@ -141,9 +142,9 @@ export default function SearchFilters({
           </div>
 
           <div className={`${expanded ? "block" : "hidden lg:block"}`}>
-            <Label className="mb-2 block">Expertise</Label>
+            <Label className="mb-2 block font-medium text-sm text-foreground/80">Expertise</Label>
             <Select>
-              <SelectTrigger>
+              <SelectTrigger className="border-border focus:ring-highlight">
                 <SelectValue placeholder="Select expertise" />
               </SelectTrigger>
               <SelectContent>
@@ -152,7 +153,7 @@ export default function SearchFilters({
                     key={expertise} 
                     value={expertise}
                     onSelect={() => handleExpertiseChange(expertise)}
-                    className={selectedExpertise.includes(expertise) ? "bg-primary" : ""}
+                    className={selectedExpertise.includes(expertise) ? "bg-highlight/10 text-highlight" : ""}
                   >
                     {expertise}
                   </SelectItem>
@@ -165,12 +166,12 @@ export default function SearchFilters({
                 {selectedExpertise.map((expertise) => (
                   <div
                     key={expertise}
-                    className="bg-primary text-xs px-2 py-1 rounded-full flex items-center"
+                    className="bg-highlight/10 text-highlight text-xs px-3 py-1 rounded-full flex items-center"
                   >
                     <span>{expertise}</span>
                     <button
                       onClick={() => handleExpertiseChange(expertise)}
-                      className="ml-1 text-muted-foreground hover:text-foreground"
+                      className="ml-1 hover:text-highlight/80"
                     >
                       <X className="h-3 w-3" />
                     </button>

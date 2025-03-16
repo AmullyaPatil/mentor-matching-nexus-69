@@ -9,7 +9,7 @@ interface User {
   email: string;
   role: UserRole;
   avatar?: string;
-  connections?: number;
+  connections: number;
 }
 
 interface AuthContextType {

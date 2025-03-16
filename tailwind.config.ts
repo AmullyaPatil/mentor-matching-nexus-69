@@ -62,6 +62,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom colors for 60-30-10 rule
+				main: "#f0f4f8", // 60% primary background color
+				highlight: "#8B5CF6", // 30% secondary color
+				accent: {
+					DEFAULT: "#D946EF", // 10% accent color
+					secondary: "#F97316", // Alternative accent
+					light: "#E5DEFF", // Light version of accent
 				}
 			},
 			fontFamily: {
@@ -106,6 +114,11 @@ export default {
 				'fade-up': 'fade-up 0.5s ease-out',
 				'slide-in-right': 'slide-in-right 0.5s ease-out',
 				'slide-in-left': 'slide-in-left 0.5s ease-out'
+			},
+			backgroundImage: {
+				'gradient-primary': 'linear-gradient(to right, #8B5CF6, #D946EF)',
+				'gradient-secondary': 'linear-gradient(to right, #D946EF, #F97316)',
+				'gradient-accent': 'linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)',
 			}
 		}
 	},
