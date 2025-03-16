@@ -1,4 +1,3 @@
-
 import { User } from "@/context/AuthContext";
 import { MOCK_USERS, MOCK_POSTS } from "@/lib/constants";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";

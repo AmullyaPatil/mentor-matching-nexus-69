@@ -1,9 +1,9 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { UserRole } from "@/lib/constants";
 import { toast } from "@/hooks/use-toast";
 
-interface User {
+// Export the User interface so it can be imported by other components
+export interface User {
   id: string;
   name: string;
   email: string;
