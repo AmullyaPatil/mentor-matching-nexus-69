@@ -198,7 +198,7 @@ export default function Search() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="max-w-3xl mx-auto mb-8"
+              className="max-w-3xl mx-auto mb-4"
             >
               <div className="relative">
                 <Input
@@ -208,17 +208,7 @@ export default function Search() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <div className="absolute right-3 top-3 flex space-x-2">
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    onClick={() => setShowFilters(!showFilters)}
-                    className="rounded-full bg-white text-teal-600 border-teal-200"
-                  >
-                    <Filter className="h-5 w-5 mr-1" />
-                    Filters {hasActiveFilters && `(${selectedRoles.length + selectedExpertise.length + selectedIndustries.length + (selectedExperience ? 1 : 0) + (selectedLocation ? 1 : 0)})`}
-                  </Button>
-                  
+                <div className="absolute right-3 top-3">
                   <Button 
                     className="rounded-full bg-teal-700 hover:bg-teal-800 text-white p-2"
                     size="icon"
@@ -228,6 +218,23 @@ export default function Search() {
                   </Button>
                 </div>
               </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex justify-center mb-8"
+            >
+              <Button 
+                size="sm" 
+                variant="outline" 
+                onClick={() => setShowFilters(!showFilters)}
+                className="rounded-full bg-white text-teal-600 border-teal-200"
+              >
+                <Filter className="h-5 w-5 mr-1" />
+                Filters {hasActiveFilters && `(${selectedRoles.length + selectedExpertise.length + selectedIndustries.length + (selectedExperience ? 1 : 0) + (selectedLocation ? 1 : 0)})`}
+              </Button>
             </motion.div>
 
             {/* Horizontal filters */}
