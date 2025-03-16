@@ -25,6 +25,7 @@ export default function Profile() {
   });
 
   const [isEditing, setIsEditing] = useState(false);
+  const userConnections = user?.connections || 0;
 
   // Handle form changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -285,7 +286,7 @@ export default function Profile() {
                               </div>
                               <div className="flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-muted-foreground mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
                                 </svg>
                                 <a href="#" className="text-sm text-pink-500 hover:underline">{formData.website}</a>
                               </div>
@@ -303,7 +304,7 @@ export default function Profile() {
                   <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                     <h3 className="text-lg font-medium mb-4">Your Network</h3>
                     <div className="text-center py-4">
-                      <div className="text-3xl font-semibold text-pink-600 mb-1">{user.connections || 42}</div>
+                      <div className="text-3xl font-semibold text-pink-600 mb-1">{userConnections}</div>
                       <div className="text-sm text-muted-foreground">Connections</div>
                     </div>
                     <Button className="w-full mt-2 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600">

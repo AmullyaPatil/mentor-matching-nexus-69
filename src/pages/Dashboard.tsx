@@ -60,6 +60,8 @@ export default function Dashboard() {
     );
   }
 
+  const userConnections = user.connections || 0;
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -133,7 +135,7 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                   <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                     <div className="text-sm text-muted-foreground mb-2">Total Connections</div>
-                    <div className="text-3xl font-semibold">{user.connections || 42}</div>
+                    <div className="text-3xl font-semibold">{userConnections}</div>
                     <div className="mt-2 text-xs text-green-600">↑ 12% from last month</div>
                   </div>
                   <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">

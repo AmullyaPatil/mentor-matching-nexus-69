@@ -9,6 +9,7 @@ interface User {
   email: string;
   role: UserRole;
   avatar?: string;
+  connections?: number;
 }
 
 interface AuthContextType {
@@ -44,7 +45,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         name: "Demo User",
         email,
         role: UserRole.MENTEE,
-        avatar: "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?q=80&w=2787&auto=format&fit=crop"
+        avatar: "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?q=80&w=2787&auto=format&fit=crop",
+        connections: 42
       };
       
       setUser(loggedInUser);
@@ -77,7 +79,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         name,
         email,
         role,
-        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=2960&auto=format&fit=crop"
+        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=2960&auto=format&fit=crop",
+        connections: 5
       };
       
       setUser(newUser);

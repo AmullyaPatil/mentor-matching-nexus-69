@@ -15,7 +15,11 @@ import {
 import { X, Filter, ChevronDown, ChevronUp } from "lucide-react";
 
 interface SearchFiltersProps {
-  onFilterChange: (filters: SearchFilters) => void;
+  selectedRoles: UserRole[];
+  onRoleChange: (roles: UserRole[]) => void;
+  selectedExpertise: string[];
+  onExpertiseChange: (expertise: string[]) => void;
+  availableExpertise: string[];
 }
 
 export interface SearchFilters {
@@ -49,62 +53,37 @@ const expertiseOptions = [
   "AI",
 ];
 
-export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
+export default function SearchFilters({ 
+  selectedRoles, 
+  onRoleChange, 
+  selectedExpertise, 
+  onExpertiseChange, 
+  availableExpertise 
+}: SearchFiltersProps) {
   const [expanded, setExpanded] = useState(false);
-  const [filters, setFilters] = useState<SearchFilters>({
-    query: "",
-    roles: [],
-    expertise: [],
-    location: "",
-  });
 
   const handleRoleChange = (role: UserRole) => {
-    const newRoles = filters.roles.includes(role)
-      ? filters.roles.filter((r) => r !== role)
-      : [...filters.roles, role];
+    const newRoles = selectedRoles.includes(role)
+      ? selectedRoles.filter((r) => r !== role)
+      : [...selectedRoles, role];
 
-    const newFilters = { ...filters, roles: newRoles };
-    setFilters(newFilters);
-    onFilterChange(newFilters);
+    onRoleChange(newRoles);
   };
 
   const handleExpertiseChange = (value: string) => {
-    const newExpertise = filters.expertise.includes(value)
-      ? filters.expertise.filter((e) => e !== value)
-      : [...filters.expertise, value];
+    const newExpertise = selectedExpertise.includes(value)
+      ? selectedExpertise.filter((e) => e !== value)
+      : [...selectedExpertise, value];
 
-    const newFilters = { ...filters, expertise: newExpertise };
-    setFilters(newFilters);
-    onFilterChange(newFilters);
-  };
-
-  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newFilters = { ...filters, query: e.target.value };
-    setFilters(newFilters);
-    onFilterChange(newFilters);
-  };
-
-  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newFilters = { ...filters, location: e.target.value };
-    setFilters(newFilters);
-    onFilterChange(newFilters);
+    onExpertiseChange(newExpertise);
   };
 
   const clearFilters = () => {
-    const newFilters = {
-      query: "",
-      roles: [],
-      expertise: [],
-      location: "",
-    };
-    setFilters(newFilters);
-    onFilterChange(newFilters);
+    onRoleChange([]);
+    onExpertiseChange([]);
   };
 
-  const hasActiveFilters =
-    filters.roles.length > 0 ||
-    filters.expertise.length > 0 ||
-    filters.location !== "";
+  const hasActiveFilters = selectedRoles.length > 0 || selectedExpertise.length > 0;
 
   return (
     <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
@@ -140,18 +119,6 @@ export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
         </div>
 
         <div className="space-y-6 lg:space-y-4">
-          <div>
-            <Label htmlFor="search-query">Search</Label>
-            <Input
-              id="search-query"
-              type="text"
-              placeholder="Name, skills or keywords"
-              value={filters.query}
-              onChange={handleQueryChange}
-              className="mt-1"
-            />
-          </div>
-
           <div className={`${expanded ? "block" : "hidden lg:block"}`}>
             <Label className="mb-2 block">Role</Label>
             <div className="space-y-2">
@@ -159,7 +126,7 @@ export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
                 <div key={role} className="flex items-center space-x-2">
                   <Checkbox
                     id={`role-${role}`}
-                    checked={filters.roles.includes(role)}
+                    checked={selectedRoles.includes(role)}
                     onCheckedChange={() => handleRoleChange(role)}
                   />
                   <Label
@@ -174,18 +141,6 @@ export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
           </div>
 
           <div className={`${expanded ? "block" : "hidden lg:block"}`}>
-            <Label htmlFor="location">Location</Label>
-            <Input
-              id="location"
-              type="text"
-              placeholder="City, state, or country"
-              value={filters.location}
-              onChange={handleLocationChange}
-              className="mt-1"
-            />
-          </div>
-
-          <div className={`${expanded ? "block" : "hidden lg:block"}`}>
             <Label className="mb-2 block">Expertise</Label>
             <Select>
               <SelectTrigger>
@@ -197,7 +152,7 @@ export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
                     key={expertise} 
                     value={expertise}
                     onSelect={() => handleExpertiseChange(expertise)}
-                    className={filters.expertise.includes(expertise) ? "bg-primary" : ""}
+                    className={selectedExpertise.includes(expertise) ? "bg-primary" : ""}
                   >
                     {expertise}
                   </SelectItem>
@@ -205,9 +160,9 @@ export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
               </SelectContent>
             </Select>
 
-            {filters.expertise.length > 0 && (
+            {selectedExpertise.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-2">
-                {filters.expertise.map((expertise) => (
+                {selectedExpertise.map((expertise) => (
                   <div
                     key={expertise}
                     className="bg-primary text-xs px-2 py-1 rounded-full flex items-center"

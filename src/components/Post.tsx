@@ -28,6 +28,16 @@ interface Author {
   avatar?: string;
 }
 
+export interface PostData {
+  id: string;
+  author: Author;
+  title: string;
+  content: string;
+  likes: number;
+  comments: number;
+  createdAt: string;
+}
+
 interface PostProps {
   id: string;
   author: Author;
@@ -38,15 +48,21 @@ interface PostProps {
   createdAt: string;
 }
 
-export default function Post({
-  id,
-  author,
-  title,
-  content,
-  likes: initialLikes,
-  comments: commentCount,
-  createdAt,
-}: PostProps) {
+// Accept either individual props or a post object
+export default function Post(props: PostProps | { post: PostData }) {
+  // Handle both ways of passing props
+  const postData = 'post' in props ? props.post : props;
+  
+  const {
+    id,
+    author,
+    title,
+    content,
+    likes: initialLikes,
+    comments: commentCount,
+    createdAt,
+  } = postData;
+  
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(initialLikes);
   const [isCommenting, setIsCommenting] = useState(false);
