@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
@@ -65,12 +66,18 @@ export default function Post({
   };
 
   const handleShare = () => {
-    toast.success("Post link copied to clipboard");
+    toast({
+      title: "Success",
+      description: "Post link copied to clipboard"
+    });
   };
 
   const handleSubmitComment = () => {
     if (commentText.trim()) {
-      toast.success("Comment posted successfully");
+      toast({
+        title: "Success",
+        description: "Comment posted successfully"
+      });
       setCommentText("");
       setIsCommenting(false);
     }

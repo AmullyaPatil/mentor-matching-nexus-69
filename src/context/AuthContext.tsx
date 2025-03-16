@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { UserRole } from "@/lib/constants";
 import { toast } from "@/hooks/use-toast";
@@ -48,9 +49,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       setUser(loggedInUser);
       localStorage.setItem("user", JSON.stringify(loggedInUser));
-      toast.success("Successfully logged in");
+      toast({
+        title: "Success",
+        description: "Successfully logged in"
+      });
     } catch (error) {
-      toast.error("Login failed. Please try again.");
+      toast({
+        title: "Error",
+        description: "Login failed. Please try again.",
+        variant: "destructive"
+      });
       console.error("Login error:", error);
       throw error;
     } finally {
@@ -74,9 +82,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       setUser(newUser);
       localStorage.setItem("user", JSON.stringify(newUser));
-      toast.success("Account created successfully");
+      toast({
+        title: "Success",
+        description: "Account created successfully"
+      });
     } catch (error) {
-      toast.error("Signup failed. Please try again.");
+      toast({
+        title: "Error",
+        description: "Signup failed. Please try again.",
+        variant: "destructive"
+      });
       console.error("Signup error:", error);
       throw error;
     } finally {
@@ -87,7 +102,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
-    toast.success("Successfully logged out");
+    toast({
+      title: "Success",
+      description: "Successfully logged out"
+    });
   };
 
   return (
