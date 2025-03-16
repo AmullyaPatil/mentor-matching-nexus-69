@@ -43,7 +43,10 @@ export const MOCK_USERS = [
     expertise: ["Product Strategy", "Growth", "Fundraising"],
     location: "San Francisco, CA",
     connections: 158,
-    yearsOfExperience: 12
+    yearsOfExperience: 12,
+    industry: "Technology",
+    experience: "10+ years",
+    rating: 4.9
   },
   {
     id: "2",
@@ -54,7 +57,10 @@ export const MOCK_USERS = [
     expertise: ["SaaS", "Fintech", "Seed Funding"],
     location: "New York, NY",
     connections: 207,
-    investment: { stage: "Seed to Series A", range: "$100K - $1M" }
+    investment: { stage: "Seed to Series A", range: "$100K - $1M" },
+    industry: "Finance",
+    experience: "10+ years",
+    rating: 4.8
   },
   {
     id: "3",
@@ -65,7 +71,10 @@ export const MOCK_USERS = [
     expertise: ["Legal", "IP Law", "Fundraising"],
     location: "Boston, MA",
     connections: 124,
-    services: ["Legal Consultation", "Contract Review", "IP Strategy"]
+    services: ["Legal Consultation", "Contract Review", "IP Strategy"],
+    industry: "Legal",
+    experience: "6-10 years",
+    rating: 4.7
   },
   {
     id: "4",
@@ -76,7 +85,10 @@ export const MOCK_USERS = [
     expertise: ["Machine Learning", "AI", "Technical Leadership"],
     location: "Austin, TX",
     connections: 96,
-    lookingFor: ["Business Co-founder", "Seed Funding", "B2B SaaS"]
+    lookingFor: ["Business Co-founder", "Seed Funding", "B2B SaaS"],
+    industry: "Technology",
+    experience: "10+ years",
+    rating: 4.6
   },
   {
     id: "5",
@@ -87,7 +99,10 @@ export const MOCK_USERS = [
     interests: ["E-commerce", "Sustainability", "Product-Market Fit"],
     location: "Portland, OR",
     connections: 42,
-    startup: { name: "EcoMarket", stage: "Pre-seed" }
+    startup: { name: "EcoMarket", stage: "Pre-seed" },
+    industry: "E-commerce",
+    experience: "0-2 years",
+    rating: 4.2
   }
 ];
 
@@ -99,7 +114,8 @@ export const MOCK_POSTS = [
     content: "After mentoring dozens of startups, I've noticed that many founders aren't tracking the right metrics. Here are the 5 most important ones to focus on...",
     likes: 42,
     comments: 12,
-    createdAt: "2023-05-15T12:34:56Z"
+    createdAt: "2023-05-15T12:34:56Z",
+    tags: ["Metrics", "Startup", "Growth"]
   },
   {
     id: "2",
@@ -108,7 +124,8 @@ export const MOCK_POSTS = [
     content: "As an angel investor, I review dozens of pitch decks every month. Here's what catches my attention and what raises red flags...",
     likes: 84,
     comments: 24,
-    createdAt: "2023-05-10T10:23:45Z"
+    createdAt: "2023-05-10T10:23:45Z",
+    tags: ["Investment", "Pre-Seed", "Funding"]
   },
   {
     id: "3",
@@ -117,6 +134,7 @@ export const MOCK_POSTS = [
     content: "We're 6 months into building our product and trying to decide between bootstrapping further or seeking seed funding. Any advice from those who've been in this position?",
     likes: 17,
     comments: 32,
-    createdAt: "2023-05-18T15:12:23Z"
+    createdAt: "2023-05-18T15:12:23Z",
+    tags: ["Bootstrapping", "Funding", "First-time Founder"]
   }
 ];

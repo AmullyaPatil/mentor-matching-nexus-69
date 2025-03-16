@@ -48,6 +48,7 @@ export default function Community() {
     filteredPosts = filteredPosts.filter(post => 
       post.content.toLowerCase().includes(query) || 
       post.author.name.toLowerCase().includes(query) ||
+      post.title.toLowerCase().includes(query) ||
       (post.tags && post.tags.some(tag => tag.toLowerCase().includes(query)))
     );
   }
