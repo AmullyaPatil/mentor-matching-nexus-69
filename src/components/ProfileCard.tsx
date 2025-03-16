@@ -35,18 +35,18 @@ export default function ProfileCard({
   if (compact) {
     return (
       <Link to={`/profiles/${id}`}>
-        <div className="p-4 rounded-xl border border-gray-100 bg-white hover:shadow-md transition-all duration-300 hover:border-highlight/30 card-hover h-full flex space-x-4">
+        <div className="p-4 rounded-xl border border-gray-100 bg-white hover:shadow-md transition-all duration-300 hover:border-blue-300 card-hover h-full flex space-x-4">
           <div className="flex-shrink-0">
             <img
               src={avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2864&auto=format&fit=crop"}
               alt={name}
-              className="h-16 w-16 rounded-full object-cover border-2 border-highlight/20"
+              className="h-16 w-16 rounded-full object-cover border-2 border-blue-200"
             />
           </div>
           <div className="flex-1">
             <h3 className="font-display font-medium text-base mb-1">{name}</h3>
             <div className="mb-2">
-              <Badge variant="secondary" className="text-xs bg-highlight/10 text-highlight hover:bg-highlight/20">
+              <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-700 hover:bg-blue-200">
                 {USER_ROLE_LABELS[role]}
               </Badge>
             </div>
@@ -60,18 +60,18 @@ export default function ProfileCard({
   }
 
   return (
-    <div className="rounded-xl border border-border bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:border-highlight/30 card-hover overflow-hidden h-full flex flex-col">
+    <div className="rounded-xl border border-border bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:border-blue-300 card-hover overflow-hidden h-full flex flex-col">
       <div className="p-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-4">
             <img
               src={avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2864&auto=format&fit=crop"}
               alt={name}
-              className="h-16 w-16 rounded-full object-cover border-2 border-highlight/20"
+              className="h-16 w-16 rounded-full object-cover border-2 border-blue-200"
             />
             <div>
               <h3 className="font-display font-medium text-lg">{name}</h3>
-              <Badge variant="secondary" className="mt-1 bg-highlight/10 text-highlight hover:bg-highlight/20">
+              <Badge variant="secondary" className="mt-1 bg-blue-100 text-blue-700 hover:bg-blue-200">
                 {USER_ROLE_LABELS[role]}
               </Badge>
             </div>
@@ -84,12 +84,12 @@ export default function ProfileCard({
           <div className="mb-4">
             <div className="flex flex-wrap gap-2">
               {skills.slice(0, 3).map((skill, index) => (
-                <Badge key={index} variant="outline" className="border-secondary/30 text-secondary">
+                <Badge key={index} variant="outline" className="border-blue-200 text-blue-700">
                   {skill}
                 </Badge>
               ))}
               {skills.length > 3 && (
-                <Badge variant="outline" className="border-secondary/30 text-secondary">+{skills.length - 3}</Badge>
+                <Badge variant="outline" className="border-blue-200 text-blue-700">+{skills.length - 3}</Badge>
               )}
             </div>
           </div>
@@ -98,13 +98,13 @@ export default function ProfileCard({
         <div className="flex items-center justify-between text-sm text-muted-foreground">
           {location && (
             <div className="flex items-center">
-              <MapPin className="h-4 w-4 mr-1 text-secondary" />
+              <MapPin className="h-4 w-4 mr-1 text-blue-600" />
               <span>{location}</span>
             </div>
           )}
           {connections && (
             <div className="flex items-center">
-              <Users className="h-4 w-4 mr-1 text-secondary" />
+              <Users className="h-4 w-4 mr-1 text-blue-600" />
               <span>{connections} connections</span>
             </div>
           )}
@@ -112,7 +112,7 @@ export default function ProfileCard({
       </div>
 
       <div className="mt-auto p-4 pt-0">
-        <Button asChild className="w-full bg-gradient-primary hover:opacity-90">
+        <Button asChild className="w-full bg-blue-600 hover:bg-blue-700">
           <Link to={`/profiles/${id}`}>View Profile</Link>
         </Button>
       </div>
