@@ -63,13 +63,13 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom colors for 60-30-10 rule with blue theme
-				main: "#f5f9ff", // 60% primary background color (light blue tint)
-				highlight: "#2563eb", // 30% secondary color (medium blue)
+				// Custom colors for 60-30-10 rule with teal/green theme
+				main: "#f2f9f7", // 60% primary background color (light teal tint)
+				highlight: "#10b981", // 30% secondary color (green)
 				accent: {
-					DEFAULT: "#1e40af", // 10% accent color (dark blue)
-					secondary: "#3b82f6", // Alternative accent (blue)
-					light: "#dbeafe", // Light version of accent (very light blue)
+					DEFAULT: "#0d9488", // 10% accent color (teal)
+					secondary: "#34d399", // Alternative accent (light green)
+					light: "#d1fae5", // Light version of accent (very light teal)
 				}
 			},
 			fontFamily: {
@@ -116,9 +116,9 @@ export default {
 				'slide-in-left': 'slide-in-left 0.5s ease-out'
 			},
 			backgroundImage: {
-				'gradient-primary': 'linear-gradient(to right, #2563eb, #3b82f6)',
-				'gradient-secondary': 'linear-gradient(to right, #1e40af, #2563eb)',
-				'gradient-accent': 'linear-gradient(135deg, #f5f9ff 0%, #dbeafe 100%)',
+				'gradient-primary': 'linear-gradient(to right, #10b981, #34d399)',
+				'gradient-secondary': 'linear-gradient(to right, #0d9488, #10b981)',
+				'gradient-accent': 'linear-gradient(135deg, #f2f9f7 0%, #d1fae5 100%)',
 			}
 		}
 	},
