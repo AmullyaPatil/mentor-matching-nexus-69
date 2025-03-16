@@ -10,10 +10,51 @@ import MenteeDashboard from "@/components/dashboards/MenteeDashboard";
 import MentorDashboard from "@/components/dashboards/MentorDashboard";
 import InvestorDashboard from "@/components/dashboards/InvestorDashboard";
 import ConnectionInterface from "@/components/ConnectionInterface";
+import ConnectionHistory from "@/components/ConnectionHistory";
+import { Clock, BarChart2 } from "lucide-react";
+
+// Mock history data
+const MOCK_HISTORY = [
+  {
+    id: "1",
+    type: "meeting" as const,
+    title: "Strategy Session",
+    participantId: "2",
+    participantName: "David Chen",
+    participantAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2787&auto=format&fit=crop",
+    participantRole: "Investor",
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(), // 2 days ago
+    duration: 45,
+    notes: "Discussed potential funding rounds and market strategy. Follow up next week about the pitch deck."
+  },
+  {
+    id: "2",
+    type: "call" as const,
+    title: "Quick Call",
+    participantId: "3",
+    participantName: "Sarah Williams",
+    participantAvatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=2961&auto=format&fit=crop",
+    participantRole: "Service Provider",
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(), // 5 days ago
+    duration: 15,
+    notes: "Discussed legal requirements for our next fundraising round."
+  },
+  {
+    id: "3",
+    type: "message" as const,
+    title: "Chat Conversation",
+    participantId: "1",
+    participantName: "Alex Morgan",
+    participantAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2787&auto=format&fit=crop",
+    participantRole: "Mentor",
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 1).toISOString(), // 1 day ago
+    notes: "Shared some resources about product development and customer acquisition."
+  }
+];
 
 export default function Dashboard() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'connections'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'connections' | 'history'>('dashboard');
 
   // Redirect to auth if not logged in
   if (!user) {
@@ -27,7 +68,7 @@ export default function Dashboard() {
               Please log in or sign up to access your dashboard
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild className="bg-primary hover:bg-primary/90">
+              <Button asChild className="bg-teal-600 hover:bg-teal-700">
                 <Link to="/auth">Log In</Link>
               </Button>
               <Button asChild variant="outline">
@@ -62,7 +103,7 @@ export default function Dashboard() {
       <Navbar />
       
       <main className="flex-grow pt-24">
-        <section className="bg-gradient-primary py-12">
+        <section className="bg-gradient-to-br from-teal-600 to-teal-700 py-12">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div>
@@ -74,7 +115,7 @@ export default function Dashboard() {
                 </p>
               </div>
               <div className="flex gap-3">
-                <Button className="bg-white text-primary hover:bg-white/90">
+                <Button className="bg-white text-teal-700 hover:bg-white/90">
                   <Link to="/profile">Edit Profile</Link>
                 </Button>
                 <Button variant="outline" className="text-white border-white/20 bg-white/10 hover:bg-white/20">
@@ -85,30 +126,42 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <section className="py-8 bg-white">
+        <section className="py-8 bg-gray-50">
           <div className="container mx-auto px-4 sm:px-6">
             {/* Tabs */}
-            <div className="mb-8 border-b border-gray-200">
+            <div className="mb-8 border-b border-gray-200 bg-white rounded-t-xl shadow-sm px-6 pt-4">
               <div className="flex space-x-8">
                 <button
-                  className={`pb-4 text-sm font-medium ${
+                  className={`pb-4 text-sm font-medium flex items-center ${
                     activeTab === 'dashboard'
-                      ? 'text-primary border-b-2 border-primary'
+                      ? 'text-teal-600 border-b-2 border-teal-600'
                       : 'text-gray-500 hover:text-gray-700'
                   }`}
                   onClick={() => setActiveTab('dashboard')}
                 >
+                  <BarChart2 className="h-4 w-4 mr-2" />
                   Dashboard
                 </button>
                 <button
-                  className={`pb-4 text-sm font-medium ${
+                  className={`pb-4 text-sm font-medium flex items-center ${
                     activeTab === 'connections'
-                      ? 'text-primary border-b-2 border-primary'
+                      ? 'text-teal-600 border-b-2 border-teal-600'
                       : 'text-gray-500 hover:text-gray-700'
                   }`}
                   onClick={() => setActiveTab('connections')}
                 >
                   Connection Hub
+                </button>
+                <button
+                  className={`pb-4 text-sm font-medium flex items-center ${
+                    activeTab === 'history'
+                      ? 'text-teal-600 border-b-2 border-teal-600'
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
+                  onClick={() => setActiveTab('history')}
+                >
+                  <Clock className="h-4 w-4 mr-2" />
+                  History
                 </button>
               </div>
             </div>
@@ -125,10 +178,10 @@ export default function Dashboard() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-1">
                   <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mb-6">
-                    <h3 className="text-lg font-medium mb-4">Your Connections</h3>
+                    <h3 className="text-lg font-medium mb-4 text-teal-900">Your Connections</h3>
                     <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
                       {Array(5).fill(0).map((_, i) => (
-                        <div key={i} className="flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <div key={i} className="flex items-center p-3 rounded-lg hover:bg-teal-50 cursor-pointer">
                           <img 
                             src={`https://randomuser.me/api/portraits/${i % 2 ? 'women' : 'men'}/${i + 1}.jpg`} 
                             alt="User" 
@@ -145,7 +198,7 @@ export default function Dashboard() {
                       ))}
                     </div>
                     <div className="mt-4 pt-4 border-t border-gray-100">
-                      <Link to="/search" className="text-sm text-primary hover:text-primary/90 font-medium">
+                      <Link to="/search" className="text-sm text-teal-600 hover:text-teal-700 font-medium">
                         Find more connections →
                       </Link>
                     </div>
@@ -156,7 +209,7 @@ export default function Dashboard() {
                   <ConnectionInterface />
                   
                   <div className="mt-6 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                    <h3 className="text-lg font-medium mb-4">Upcoming Sessions</h3>
+                    <h3 className="text-lg font-medium mb-4 text-teal-900">Upcoming Sessions</h3>
                     <div className="space-y-4">
                       {Array(3).fill(0).map((_, i) => (
                         <div key={i} className="p-4 bg-gray-50 rounded-lg flex items-center gap-4">
@@ -171,7 +224,7 @@ export default function Dashboard() {
                               {i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : 'Friday'}, {1 + i}:00 PM • 45 min
                             </div>
                           </div>
-                          <Button className="bg-primary hover:bg-primary/90">
+                          <Button className="bg-teal-600 hover:bg-teal-700">
                             Join
                           </Button>
                         </div>
@@ -179,6 +232,13 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* History Tab */}
+            {activeTab === 'history' && (
+              <div className="grid grid-cols-1 gap-6">
+                <ConnectionHistory history={MOCK_HISTORY} />
               </div>
             )}
           </div>

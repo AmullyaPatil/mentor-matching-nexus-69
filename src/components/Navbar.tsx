@@ -9,6 +9,9 @@ import {
   X,
   ChevronDown,
   Heart,
+  Home,
+  Users,
+  Globe,
   BookOpen
 } from "lucide-react";
 import {
@@ -22,9 +25,10 @@ import {
 
 // Updated nav items
 const NAV_ITEMS = [
-  { path: "/search", name: "Find Connections" },
-  { path: "/community", name: "Community" },
-  { path: "/knowledge-hub", name: "Knowledge Hub" },
+  { path: "/", name: "Home", icon: <Home className="h-4 w-4 mr-2" /> },
+  { path: "/search", name: "Find Connections", icon: <Users className="h-4 w-4 mr-2" /> },
+  { path: "/community", name: "Community", icon: <Globe className="h-4 w-4 mr-2" /> },
+  { path: "/knowledge-hub", name: "Knowledge Hub", icon: <BookOpen className="h-4 w-4 mr-2" /> },
 ];
 
 export default function Navbar() {
@@ -69,12 +73,13 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center ${
                     location.pathname === item.path
                       ? "bg-teal-100 text-teal-700"
                       : "text-foreground/70 hover:text-foreground hover:bg-teal-50"
                   }`}
                 >
+                  {item.icon}
                   {item.name}
                 </Link>
               ))}
@@ -167,12 +172,13 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${
+                  className={`px-4 py-3 rounded-md text-sm font-medium transition-colors flex items-center ${
                     location.pathname === item.path
                       ? "bg-teal-100 text-teal-700"
                       : "text-foreground/70 hover:text-foreground hover:bg-teal-50"
                   }`}
                 >
+                  {item.icon}
                   {item.name}
                 </Link>
               ))}

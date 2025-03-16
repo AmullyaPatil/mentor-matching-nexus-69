@@ -9,7 +9,10 @@ import {
   Heart,
   Share2,
   MoreHorizontal,
-  Send
+  Send,
+  Paperclip,
+  Image,
+  File
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -36,6 +39,12 @@ export interface PostData {
   likes: number;
   comments: number;
   createdAt: string;
+  tags?: string[];
+  media?: {
+    type: 'image' | 'file';
+    url: string;
+    name?: string;
+  }[];
 }
 
 interface PostProps {
@@ -46,6 +55,12 @@ interface PostProps {
   likes: number;
   comments: number;
   createdAt: string;
+  tags?: string[];
+  media?: {
+    type: 'image' | 'file';
+    url: string;
+    name?: string;
+  }[];
 }
 
 // Accept either individual props or a post object
@@ -61,6 +76,8 @@ export default function Post(props: PostProps | { post: PostData }) {
     likes: initialLikes,
     comments: commentCount,
     createdAt,
+    tags,
+    media
   } = postData;
   
   const [isLiked, setIsLiked] = useState(false);
@@ -137,11 +154,53 @@ export default function Post(props: PostProps | { post: PostData }) {
         </div>
 
         <Link to={`/community/post/${id}`}>
-          <h4 className="text-lg font-display font-medium mb-2 hover:text-blue-600 transition-colors">
+          <h4 className="text-lg font-display font-medium mb-2 hover:text-teal-600 transition-colors">
             {title}
           </h4>
           <p className="text-muted-foreground mb-4">{content}</p>
         </Link>
+
+        {/* Display media attachments if available */}
+        {media && media.length > 0 && (
+          <div className="mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {media.map((item, index) => (
+                <div key={index} className="relative rounded-lg overflow-hidden">
+                  {item.type === 'image' ? (
+                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="block">
+                      <img
+                        src={item.url}
+                        alt={item.name || "Attached image"}
+                        className="w-full h-auto object-cover rounded-lg"
+                      />
+                    </a>
+                  ) : (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                    >
+                      <File className="h-5 w-5 text-teal-600 mr-2" />
+                      <span className="text-sm truncate">{item.name || "Attached file"}</span>
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Tags */}
+        {tags && tags.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-4">
+            {tags.map((tag, index) => (
+              <Badge key={index} variant="outline" className="bg-teal-50 text-teal-700 hover:bg-teal-100">
+                #{tag}
+              </Badge>
+            ))}
+          </div>
+        )}
 
         <div className="flex items-center justify-between text-sm text-muted-foreground">
           <div className="flex space-x-4">
@@ -192,6 +251,7 @@ export default function Post(props: PostProps | { post: PostData }) {
                 size="sm"
                 onClick={handleSubmitComment}
                 disabled={!commentText.trim()}
+                className="bg-teal-600 hover:bg-teal-700"
               >
                 <Send className="h-4 w-4 mr-2" />
                 Post
