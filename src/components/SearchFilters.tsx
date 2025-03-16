@@ -65,99 +65,182 @@ export default function SearchFilters({
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
       <div className="p-4 sm:p-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-medium font-display text-gray-900">Filters</h3>
-          <div className="flex items-center">
-            {hasActiveFilters && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearFilters}
-                className="text-sm mr-2 text-teal-600 hover:text-teal-700 hover:bg-teal-50"
-              >
-                <X className="h-4 w-4 mr-1" />
-                Clear all
-              </Button>
-            )}
+          {hasActiveFilters && (
             <Button
               variant="ghost"
               size="sm"
-              className="lg:hidden text-teal-600 hover:text-teal-700 hover:bg-teal-50"
-              onClick={() => setExpanded(!expanded)}
+              onClick={clearFilters}
+              className="text-sm text-teal-600 hover:text-teal-700 hover:bg-teal-50"
             >
-              <Filter className="h-4 w-4 mr-1" />
-              {expanded ? (
-                <ChevronUp className="h-4 w-4 ml-1" />
-              ) : (
-                <ChevronDown className="h-4 w-4 ml-1" />
-              )}
+              <X className="h-4 w-4 mr-1" />
+              Clear all
             </Button>
-          </div>
+          )}
         </div>
 
-        <div className="space-y-6 lg:space-y-4">
-          <div className={`${expanded ? "block" : "hidden lg:block"}`}>
-            <Label className="mb-2 block font-medium text-sm text-gray-700">Role</Label>
-            <div className="space-y-2">
-              {Object.values(UserRole).map((role) => (
-                <div key={role} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`role-${role}`}
-                    checked={selectedRoles.includes(role)}
-                    onCheckedChange={() => handleRoleChange(role)}
-                    className="text-teal-600 border-gray-300 data-[state=checked]:bg-teal-600 data-[state=checked]:text-white"
-                  />
-                  <Label
-                    htmlFor={`role-${role}`}
-                    className="text-sm font-normal cursor-pointer"
-                  >
-                    {USER_ROLE_LABELS[role]}
-                  </Label>
+        <div className={`${expanded ? "block" : "hidden lg:block"}`}>
+          {/* Horizontal filter layout */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            {/* Role filter */}
+            <div>
+              <Label className="mb-2 block font-medium text-sm text-gray-700">Role</Label>
+              <Select>
+                <SelectTrigger className="border-gray-200 focus:ring-teal-500">
+                  <SelectValue placeholder="Select role" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.values(UserRole).map((role) => (
+                    <SelectItem 
+                      key={role} 
+                      value={role}
+                      onSelect={() => handleRoleChange(role)}
+                      className={selectedRoles.includes(role) ? "bg-teal-50 text-teal-700" : ""}
+                    >
+                      {USER_ROLE_LABELS[role]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              {selectedRoles.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {selectedRoles.map((role) => (
+                    <Badge
+                      key={role}
+                      variant="secondary"
+                      className="bg-teal-100 text-teal-700 hover:bg-teal-200"
+                    >
+                      <span>{USER_ROLE_LABELS[role]}</span>
+                      <button
+                        onClick={() => handleRoleChange(role)}
+                        className="ml-1 hover:text-teal-900"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  ))}
                 </div>
-              ))}
+              )}
+            </div>
+
+            {/* Expertise filter */}
+            <div>
+              <Label className="mb-2 block font-medium text-sm text-gray-700">Expertise</Label>
+              <Select>
+                <SelectTrigger className="border-gray-200 focus:ring-teal-500">
+                  <SelectValue placeholder="Select expertise" />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableExpertise.map((expertise) => (
+                    <SelectItem 
+                      key={expertise} 
+                      value={expertise}
+                      onSelect={() => handleExpertiseChange(expertise)}
+                      className={selectedExpertise.includes(expertise) ? "bg-teal-50 text-teal-700" : ""}
+                    >
+                      {expertise}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              {selectedExpertise.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {selectedExpertise.map((expertise) => (
+                    <Badge
+                      key={expertise}
+                      variant="secondary"
+                      className="bg-teal-100 text-teal-700 hover:bg-teal-200"
+                    >
+                      <span>{expertise}</span>
+                      <button
+                        onClick={() => handleExpertiseChange(expertise)}
+                        className="ml-1 hover:text-teal-900"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {/* Location filter */}
+            <div>
+              <Label className="mb-2 block font-medium text-sm text-gray-700">Location</Label>
+              <Select>
+                <SelectTrigger className="border-gray-200 focus:ring-teal-500">
+                  <SelectValue placeholder="Select location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any location</SelectItem>
+                  <SelectItem value="san-francisco">San Francisco</SelectItem>
+                  <SelectItem value="new-york">New York</SelectItem>
+                  <SelectItem value="london">London</SelectItem>
+                  <SelectItem value="remote">Remote</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            {/* Experience filter */}
+            <div>
+              <Label className="mb-2 block font-medium text-sm text-gray-700">Experience</Label>
+              <Select>
+                <SelectTrigger className="border-gray-200 focus:ring-teal-500">
+                  <SelectValue placeholder="Years of experience" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any experience</SelectItem>
+                  <SelectItem value="0-2">0-2 years</SelectItem>
+                  <SelectItem value="3-5">3-5 years</SelectItem>
+                  <SelectItem value="6-10">6-10 years</SelectItem>
+                  <SelectItem value="10+">10+ years</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            {/* Industry filter */}
+            <div>
+              <Label className="mb-2 block font-medium text-sm text-gray-700">Industry</Label>
+              <Select>
+                <SelectTrigger className="border-gray-200 focus:ring-teal-500">
+                  <SelectValue placeholder="Select industry" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any industry</SelectItem>
+                  <SelectItem value="technology">Technology</SelectItem>
+                  <SelectItem value="finance">Finance</SelectItem>
+                  <SelectItem value="healthcare">Healthcare</SelectItem>
+                  <SelectItem value="education">Education</SelectItem>
+                  <SelectItem value="retail">Retail</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
-
-          <div className={`${expanded ? "block" : "hidden lg:block"}`}>
-            <Label className="mb-2 block font-medium text-sm text-gray-700">Expertise</Label>
-            <Select>
-              <SelectTrigger className="border-gray-200 focus:ring-teal-500">
-                <SelectValue placeholder="Select expertise" />
-              </SelectTrigger>
-              <SelectContent>
-                {availableExpertise.map((expertise) => (
-                  <SelectItem 
-                    key={expertise} 
-                    value={expertise}
-                    onSelect={() => handleExpertiseChange(expertise)}
-                    className={selectedExpertise.includes(expertise) ? "bg-teal-50 text-teal-700" : ""}
-                  >
-                    {expertise}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            {selectedExpertise.length > 0 && (
-              <div className="mt-2 flex flex-wrap gap-2">
-                {selectedExpertise.map((expertise) => (
-                  <Badge
-                    key={expertise}
-                    variant="secondary"
-                    className="bg-teal-100 text-teal-700 hover:bg-teal-200"
-                  >
-                    <span>{expertise}</span>
-                    <button
-                      onClick={() => handleExpertiseChange(expertise)}
-                      className="ml-1 hover:text-teal-900"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                ))}
-              </div>
+        </div>
+        
+        {/* Mobile toggle button */}
+        <div className="mt-4 lg:hidden flex justify-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-teal-600 hover:text-teal-700 hover:bg-teal-50"
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? (
+              <>
+                <ChevronUp className="h-4 w-4 mr-1" />
+                Hide Filters
+              </>
+            ) : (
+              <>
+                <ChevronDown className="h-4 w-4 mr-1" />
+                Show Filters
+              </>
             )}
-          </div>
+          </Button>
         </div>
       </div>
     </div>
