@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { MessageSquare, Calendar, Phone, CheckCircle2, XCircle } from "lucide-react";
+import { MessageSquare, Calendar, Phone, CheckCircle2, XCircle, Video, Clock } from "lucide-react";
 
 // Mock data for the mentor dashboard
 const earningsData = [
@@ -57,22 +57,23 @@ export default function MentorDashboard({ user }: MentorDashboardProps) {
     });
   };
 
-  const handleStartCall = (name: string, type: 'message' | 'meeting' | 'call') => {
+  const handleStartCall = (name: string, type: 'message' | 'meeting' | 'call' | 'video') => {
     const actions = {
       'message': `Chat started with ${name}`,
       'meeting': `Meeting scheduled with ${name}`,
-      'call': `Calling ${name}...`
+      'call': `Calling ${name}...`,
+      'video': `Video call started with ${name}...`
     };
     
     toast({
-      title: type === 'message' ? 'New Message' : type === 'meeting' ? 'Meeting Scheduled' : 'Call Started',
+      title: type === 'message' ? 'New Message' : type === 'meeting' ? 'Meeting Scheduled' : type === 'call' ? 'Call Started' : 'Video Call Started',
       description: actions[type]
     });
   };
 
   return (
     <div className="space-y-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
           <div className="text-sm text-navy-600 mb-2">Total Earnings</div>
           <div className="text-3xl font-semibold">$3,100</div>
@@ -88,17 +89,22 @@ export default function MentorDashboard({ user }: MentorDashboardProps) {
           <div className="text-3xl font-semibold">4.8/5</div>
           <div className="mt-2 text-xs text-cobalt-600">↑ 0.2 from last month</div>
         </div>
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
+          <div className="text-sm text-navy-600 mb-2">Hours Mentored</div>
+          <div className="text-3xl font-semibold">86</div>
+          <div className="mt-2 text-xs text-cobalt-600">↑ 14 hours this month</div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Monthly Earnings</h3>
-          <div className="h-64">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-8">
+        <div className="bg-white p-4 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-md font-medium mb-2">Monthly Earnings</h3>
+          <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={earningsData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              <AreaChart data={earningsData} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <XAxis dataKey="name" tick={{fontSize: 10}} />
+                <YAxis tick={{fontSize: 10}} />
                 <Tooltip formatter={(value) => [`$${value}`, "Earnings"]} />
                 <Area type="monotone" dataKey="amount" fill="#3372ff" stroke="#0047cc" fillOpacity={0.6} />
               </AreaChart>
@@ -106,9 +112,9 @@ export default function MentorDashboard({ user }: MentorDashboardProps) {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Session Types</h3>
-          <div className="h-64">
+        <div className="bg-white p-4 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-md font-medium mb-2">Session Types</h3>
+          <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -116,32 +122,30 @@ export default function MentorDashboard({ user }: MentorDashboardProps) {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  outerRadius={80}
+                  outerRadius={40}
                   fill="#8884d8"
                   dataKey="value"
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`}
                 >
                   {sessionTypeData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip formatter={(value) => [`${value}%`, "Percentage"]} />
-                <Legend />
+                <Legend layout="vertical" verticalAlign="middle" align="right" />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
-      </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Mentees Growth</h3>
-          <div className="h-64">
+        <div className="bg-white p-4 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-md font-medium mb-2">Mentees Growth</h3>
+          <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={menteesGrowthData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              <BarChart data={menteesGrowthData} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <XAxis dataKey="name" tick={{fontSize: 10}} />
+                <YAxis tick={{fontSize: 10}} />
                 <Tooltip formatter={(value) => [`${value}`, "Mentees"]} />
                 <Bar dataKey="mentees" fill="#3372ff" />
               </BarChart>
@@ -149,14 +153,14 @@ export default function MentorDashboard({ user }: MentorDashboardProps) {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Rating Trend</h3>
-          <div className="h-64">
+        <div className="bg-white p-4 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-md font-medium mb-2">Rating Trend</h3>
+          <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={ratingsData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              <LineChart data={ratingsData} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis domain={[3, 5]} />
+                <XAxis dataKey="name" tick={{fontSize: 10}} />
+                <YAxis domain={[3, 5]} tick={{fontSize: 10}} />
                 <Tooltip formatter={(value) => [`${value}`, "Rating"]} />
                 <Line type="monotone" dataKey="rating" stroke="#0047cc" strokeWidth={2} />
               </LineChart>
@@ -182,24 +186,38 @@ export default function MentorDashboard({ user }: MentorDashboardProps) {
                     {index === 0 ? "Today" : index === 1 ? "Tomorrow" : "Friday"}, {2 + index}:00 PM • 45 min session
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-1">
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="h-8 border-navy-200 text-navy-700"
+                    className="h-8 border-navy-200 text-navy-700 hover:bg-navy-50"
                     onClick={() => handleStartCall(mentee.name, 'message')}
                   >
-                    <MessageSquare className="h-4 w-4 mr-1" />
-                    Message
+                    <MessageSquare className="h-4 w-4" />
                   </Button>
                   <Button 
-                    variant="default" 
+                    variant="outline"
                     size="sm" 
-                    className="h-8 bg-cobalt-600 hover:bg-cobalt-700"
+                    className="h-8 border-navy-200 text-navy-700 hover:bg-navy-50"
                     onClick={() => handleStartCall(mentee.name, 'call')}
                   >
-                    <Phone className="h-4 w-4 mr-1" />
-                    Join
+                    <Phone className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    size="sm" 
+                    className="h-8 border-navy-200 text-navy-700 hover:bg-navy-50"
+                    onClick={() => handleStartCall(mentee.name, 'video')}
+                  >
+                    <Video className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    className="h-8 bg-cobalt-600 hover:bg-cobalt-700"
+                    onClick={() => handleStartCall(mentee.name, 'meeting')}
+                  >
+                    <Calendar className="h-4 w-4 mr-1" />
+                    Schedule
                   </Button>
                 </div>
               </div>
@@ -251,6 +269,59 @@ export default function MentorDashboard({ user }: MentorDashboardProps) {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+      
+      <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
+        <h3 className="text-lg font-medium mb-4">Active Mentee Connections</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {MOCK_USERS.slice(0, 6).map((mentee) => (
+            <div key={mentee.id} className="p-4 bg-gray-50 rounded-lg flex flex-col">
+              <div className="flex items-center gap-3 mb-3">
+                <img
+                  src={mentee.avatar}
+                  alt={mentee.name}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div>
+                  <div className="font-medium">{mentee.name}</div>
+                  <div className="text-xs text-navy-600">{mentee.role}</div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between mt-2">
+                <div className="text-xs text-navy-600 flex items-center">
+                  <Clock className="h-3 w-3 mr-1" />
+                  {Math.floor(Math.random() * 10) + 2} sessions
+                </div>
+                <div className="flex gap-1">
+                  <Button
+                    variant="outline" 
+                    size="sm" 
+                    className="h-7 w-7 p-0 border-navy-200"
+                    onClick={() => handleStartCall(mentee.name, 'message')}
+                  >
+                    <MessageSquare className="h-3 w-3" />
+                  </Button>
+                  <Button
+                    variant="outline" 
+                    size="sm" 
+                    className="h-7 w-7 p-0 border-navy-200"
+                    onClick={() => handleStartCall(mentee.name, 'call')}
+                  >
+                    <Phone className="h-3 w-3" />
+                  </Button>
+                  <Button
+                    variant="outline" 
+                    size="sm" 
+                    className="h-7 w-7 p-0 border-navy-200"
+                    onClick={() => handleStartCall(mentee.name, 'video')}
+                  >
+                    <Video className="h-3 w-3" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

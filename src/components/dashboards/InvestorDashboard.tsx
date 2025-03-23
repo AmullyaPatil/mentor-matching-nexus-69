@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { MessageSquare, Calendar, Phone, CheckCircle2, XCircle } from "lucide-react";
+import { MessageSquare, Calendar, Phone, CheckCircle2, XCircle, Video, TrendingUp } from "lucide-react";
 
 // Mock data for the investor dashboard
 const investmentData = [
@@ -58,22 +58,23 @@ export default function InvestorDashboard({ user }: InvestorDashboardProps) {
     });
   };
 
-  const handleStartCall = (name: string, type: 'message' | 'meeting' | 'call') => {
+  const handleStartCall = (name: string, type: 'message' | 'meeting' | 'call' | 'video') => {
     const actions = {
       'message': `Chat started with ${name}`,
       'meeting': `Meeting scheduled with ${name}`,
-      'call': `Calling ${name}...`
+      'call': `Calling ${name}...`,
+      'video': `Video call started with ${name}...`
     };
     
     toast({
-      title: type === 'message' ? 'New Message' : type === 'meeting' ? 'Meeting Scheduled' : 'Call Started',
+      title: type === 'message' ? 'New Message' : type === 'meeting' ? 'Meeting Scheduled' : type === 'call' ? 'Call Started' : 'Video Call Started',
       description: actions[type]
     });
   };
 
   return (
     <div className="space-y-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
           <div className="text-sm text-navy-600 mb-2">Total Investments</div>
           <div className="text-3xl font-semibold">$2.1M</div>
@@ -89,17 +90,22 @@ export default function InvestorDashboard({ user }: InvestorDashboardProps) {
           <div className="text-3xl font-semibold">18.5%</div>
           <div className="mt-2 text-xs text-cobalt-600">↑ 3.2% from last year</div>
         </div>
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
+          <div className="text-sm text-navy-600 mb-2">Potential Deals</div>
+          <div className="text-3xl font-semibold">8</div>
+          <div className="mt-2 text-xs text-cobalt-600">↑ 3 this quarter</div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Investment History</h3>
-          <div className="h-64">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-8">
+        <div className="bg-white p-4 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-md font-medium mb-2">Investment History</h3>
+          <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={investmentData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              <AreaChart data={investmentData} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <XAxis dataKey="name" tick={{fontSize: 10}} />
+                <YAxis tick={{fontSize: 10}} />
                 <Tooltip formatter={(value) => [`$${Number(value).toLocaleString()}`, "Investment"]} />
                 <Area type="monotone" dataKey="amount" stroke="#0047cc" fill="#3372ff" fillOpacity={0.6} />
               </AreaChart>
@@ -107,9 +113,9 @@ export default function InvestorDashboard({ user }: InvestorDashboardProps) {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Portfolio Distribution</h3>
-          <div className="h-64">
+        <div className="bg-white p-4 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-md font-medium mb-2">Portfolio Distribution</h3>
+          <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -117,32 +123,30 @@ export default function InvestorDashboard({ user }: InvestorDashboardProps) {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  outerRadius={80}
+                  outerRadius={40}
                   fill="#8884d8"
                   dataKey="value"
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`}
                 >
                   {portfolioData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip formatter={(value) => [`${value}%`, "Percentage"]} />
-                <Legend />
+                <Legend layout="vertical" verticalAlign="middle" align="right" />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
-      </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Monthly Returns</h3>
-          <div className="h-64">
+        <div className="bg-white p-4 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-md font-medium mb-2">Monthly Returns</h3>
+          <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={returnData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              <LineChart data={returnData} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <XAxis dataKey="name" tick={{fontSize: 10}} />
+                <YAxis tick={{fontSize: 10}} />
                 <Tooltip formatter={(value) => [`${value}%`, "Return"]} />
                 <Line type="monotone" dataKey="return" stroke="#0047cc" strokeWidth={2} />
               </LineChart>
@@ -150,16 +154,16 @@ export default function InvestorDashboard({ user }: InvestorDashboardProps) {
           </div>
         </div>
         
-        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Startup Analysis</h3>
-          <div className="h-64">
+        <div className="bg-white p-4 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-md font-medium mb-2">Startup Analysis</h3>
+          <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart margin={{ top: 20, right: 20, bottom: 10, left: 10 }}>
+              <ScatterChart margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" dataKey="x" name="Growth Potential" unit="%" />
-                <YAxis type="number" dataKey="y" name="Risk Factor" unit="%" />
-                <ZAxis type="number" dataKey="z" range={[60, 400]} name="Investment Size" unit="K" />
-                <Tooltip cursor={{ strokeDasharray: '3 3' }} formatter={(value, name) => [`${value}${name === 'z' ? 'K' : '%'}`, name === 'z' ? 'Investment Size' : name === 'y' ? 'Risk Factor' : 'Growth Potential']} />
+                <XAxis type="number" dataKey="x" name="Growth" tick={{fontSize: 10}} />
+                <YAxis type="number" dataKey="y" name="Risk" tick={{fontSize: 10}} />
+                <ZAxis type="number" dataKey="z" range={[60, 200]} name="Size" />
+                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                 <Scatter data={startupAnalysisData} fill="#3372ff" />
               </ScatterChart>
             </ResponsiveContainer>
@@ -225,29 +229,97 @@ export default function InvestorDashboard({ user }: InvestorDashboardProps) {
                     {index === 0 ? "Today" : index === 1 ? "Tomorrow" : "Friday"}, {3 + index}:00 PM • Pitch Meeting
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-1">
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="h-8 border-navy-200 text-navy-700"
+                    className="h-8 border-navy-200 text-navy-700 hover:bg-navy-50"
                     onClick={() => handleStartCall(contact.name, 'message')}
                   >
-                    <MessageSquare className="h-4 w-4 mr-1" />
-                    Message
+                    <MessageSquare className="h-4 w-4" />
                   </Button>
                   <Button 
-                    variant="default" 
+                    variant="outline"
                     size="sm" 
-                    className="h-8 bg-cobalt-600 hover:bg-cobalt-700"
+                    className="h-8 border-navy-200 text-navy-700 hover:bg-navy-50"
                     onClick={() => handleStartCall(contact.name, 'call')}
                   >
-                    <Phone className="h-4 w-4 mr-1" />
-                    Call
+                    <Phone className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    size="sm" 
+                    className="h-8 border-navy-200 text-navy-700 hover:bg-navy-50"
+                    onClick={() => handleStartCall(contact.name, 'video')}
+                  >
+                    <Video className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    className="h-8 bg-cobalt-600 hover:bg-cobalt-700"
+                    onClick={() => handleStartCall(contact.name, 'meeting')}
+                  >
+                    <Calendar className="h-4 w-4 mr-1" />
+                    Schedule
                   </Button>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+      </div>
+      
+      <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
+        <h3 className="text-lg font-medium mb-4">Portfolio Performance</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {portfolioData.map((item, index) => (
+            <div key={index} className="p-4 bg-gray-50 rounded-lg flex flex-col">
+              <div className="flex items-center justify-between mb-3">
+                <div className="font-medium">{MOCK_USERS[index]?.name || `Startup ${index + 1}`}</div>
+                <Badge className={
+                  index === 0 ? "bg-green-100 text-green-800" :
+                  index === 1 ? "bg-yellow-100 text-yellow-800" :
+                  index === 2 ? "bg-cobalt-100 text-cobalt-800" :
+                  "bg-navy-100 text-navy-800"
+                }>
+                  {item.name}
+                </Badge>
+              </div>
+              <div className="flex items-center mb-2">
+                <div className="text-sm text-navy-600">Investment: ${(200000 + index * 50000).toLocaleString()}</div>
+                <div className="ml-auto flex items-center text-green-600 text-sm">
+                  <TrendingUp className="h-3 w-3 mr-1" />
+                  {(index * 2 + 6)}%
+                </div>
+              </div>
+              <div className="flex items-center justify-between mt-2">
+                <div className="flex gap-1">
+                  <Button
+                    variant="outline" 
+                    size="sm" 
+                    className="h-7 w-7 p-0 border-navy-200"
+                    onClick={() => handleStartCall(MOCK_USERS[index]?.name || `Startup ${index + 1}`, 'message')}
+                  >
+                    <MessageSquare className="h-3 w-3" />
+                  </Button>
+                  <Button
+                    variant="outline" 
+                    size="sm" 
+                    className="h-7 w-7 p-0 border-navy-200"
+                    onClick={() => handleStartCall(MOCK_USERS[index]?.name || `Startup ${index + 1}`, 'call')}
+                  >
+                    <Phone className="h-3 w-3" />
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    className="h-7 text-xs border-navy-200 bg-cobalt-600 hover:bg-cobalt-700"
+                  >
+                    Details
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

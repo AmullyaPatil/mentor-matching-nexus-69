@@ -61,7 +61,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="h-10 w-10 rounded-lg bg-teal-600 flex items-center justify-center transition-transform duration-500 group-hover:rotate-6">
+            <div className="h-10 w-10 rounded-lg bg-cobalt-600 flex items-center justify-center transition-transform duration-500 group-hover:rotate-6">
               <span className="text-white font-display text-lg font-semibold">SG</span>
             </div>
             <span className="font-display text-xl font-medium">Startup Growth</span>
@@ -75,8 +75,8 @@ export default function Navbar() {
                   to={item.path}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center ${
                     location.pathname === item.path
-                      ? "bg-teal-100 text-teal-700"
-                      : "text-foreground/70 hover:text-foreground hover:bg-teal-50"
+                      ? "bg-cobalt-100 text-cobalt-700"
+                      : "text-foreground/70 hover:text-foreground hover:bg-cobalt-50"
                   }`}
                 >
                   {item.icon}
@@ -142,7 +142,7 @@ export default function Navbar() {
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/auth">Log In</Link>
                 </Button>
-                <Button asChild size="sm" className="bg-teal-600 hover:bg-teal-700">
+                <Button asChild size="sm" className="bg-cobalt-600 hover:bg-cobalt-700">
                   <Link to="/auth?signup=true">Sign Up</Link>
                 </Button>
               </div>
@@ -174,8 +174,8 @@ export default function Navbar() {
                   to={item.path}
                   className={`px-4 py-3 rounded-md text-sm font-medium transition-colors flex items-center ${
                     location.pathname === item.path
-                      ? "bg-teal-100 text-teal-700"
-                      : "text-foreground/70 hover:text-foreground hover:bg-teal-50"
+                      ? "bg-cobalt-100 text-cobalt-700"
+                      : "text-foreground/70 hover:text-foreground hover:bg-cobalt-50"
                   }`}
                 >
                   {item.icon}
@@ -186,13 +186,13 @@ export default function Navbar() {
                 <>
                   <Link
                     to="/auth"
-                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-teal-50"
+                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-cobalt-50"
                   >
                     Log In
                   </Link>
                   <Link
                     to="/auth?signup=true"
-                    className="px-4 py-3 rounded-md text-sm font-medium bg-teal-600 text-white hover:bg-teal-700"
+                    className="px-4 py-3 rounded-md text-sm font-medium bg-cobalt-600 text-white hover:bg-cobalt-700"
                   >
                     Sign Up
                   </Link>
@@ -202,20 +202,20 @@ export default function Navbar() {
                 <>
                   <Link
                     to="/dashboard"
-                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-teal-50"
+                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-cobalt-50"
                   >
                     Dashboard
                   </Link>
                   <Link
                     to="/wishlist"
-                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-teal-50 flex items-center"
+                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-cobalt-50 flex items-center"
                   >
                     <Heart className="h-4 w-4 mr-2" />
                     Wishlist
                   </Link>
                   <Link
                     to="/profile"
-                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-teal-50"
+                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-cobalt-50"
                   >
                     Profile
                   </Link>
