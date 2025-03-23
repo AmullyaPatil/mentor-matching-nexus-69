@@ -3,6 +3,7 @@ import { User } from "@/context/AuthContext";
 import { MOCK_USERS, MOCK_POSTS } from "@/lib/constants";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, LineChart, Line, AreaChart, Area, ScatterChart, Scatter, ZAxis } from "recharts";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { MessageSquare, Calendar, Phone, CheckCircle2, XCircle, Video, TrendingUp } from "lucide-react";
