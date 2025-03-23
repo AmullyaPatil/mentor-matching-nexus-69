@@ -50,7 +50,7 @@
 .role-word {
   position: relative;
   display: inline-block;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
   color: #3372ff;
   font-weight: 600;
 }
@@ -60,4 +60,17 @@
   border-radius: 4px;
   padding: 0 6px;
   margin: 0 -6px;
+  animation: pulse-highlight 2s infinite;
+}
+
+@keyframes pulse-highlight {
+  0% {
+    background-color: rgba(51, 114, 255, 0.1);
+  }
+  50% {
+    background-color: rgba(51, 114, 255, 0.3);
+  }
+  100% {
+    background-color: rgba(51, 114, 255, 0.1);
+  }
 }

@@ -1,10 +1,11 @@
+
 import { User } from "@/context/AuthContext";
 import { MOCK_USERS, MOCK_POSTS } from "@/lib/constants";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, LineChart, Line, AreaChart, Area } from "recharts";
 import { Button } from "@/components/ui/button";
-import ProfileCard from "@/components/ProfileCard";
 import { Link } from "react-router-dom";
-import Post from "@/components/Post";
+import { toast } from "@/hooks/use-toast";
+import { MessageSquare, Calendar, Phone, CheckCircle2, XCircle } from "lucide-react";
 
 // Mock data for the mentor dashboard
 const earningsData = [
@@ -22,50 +23,90 @@ const sessionTypeData = [
   { name: "Chat Support", value: 10 },
 ];
 
-const COLORS = ["#0d9488", "#10b981", "#34d399"];
+const menteesGrowthData = [
+  { name: "Jan", mentees: 5 },
+  { name: "Feb", mentees: 8 },
+  { name: "Mar", mentees: 12 },
+  { name: "Apr", mentees: 15 },
+  { name: "May", mentees: 18 },
+  { name: "Jun", mentees: 22 }
+];
+
+const ratingsData = [
+  { name: "Jan", rating: 4.2 },
+  { name: "Feb", rating: 4.3 },
+  { name: "Mar", rating: 4.5 },
+  { name: "Apr", rating: 4.7 },
+  { name: "May", rating: 4.8 },
+  { name: "Jun", rating: 4.9 }
+];
+
+const COLORS = ["#0047cc", "#3372ff", "#85aaff"];
 
 interface MentorDashboardProps {
   user: User;
 }
 
 export default function MentorDashboard({ user }: MentorDashboardProps) {
+  const handleConnectionAction = (name: string, action: 'accept' | 'decline') => {
+    toast({
+      title: action === 'accept' ? "Connection Accepted" : "Connection Declined",
+      description: action === 'accept' 
+        ? `You are now connected with ${name}` 
+        : `You have declined the connection request from ${name}`
+    });
+  };
+
+  const handleStartCall = (name: string, type: 'message' | 'meeting' | 'call') => {
+    const actions = {
+      'message': `Chat started with ${name}`,
+      'meeting': `Meeting scheduled with ${name}`,
+      'call': `Calling ${name}...`
+    };
+    
+    toast({
+      title: type === 'message' ? 'New Message' : type === 'meeting' ? 'Meeting Scheduled' : 'Call Started',
+      description: actions[type]
+    });
+  };
+
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <div className="text-sm text-muted-foreground mb-2">Total Earnings</div>
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
+          <div className="text-sm text-navy-600 mb-2">Total Earnings</div>
           <div className="text-3xl font-semibold">$3,100</div>
-          <div className="mt-2 text-xs text-green-600">↑ 18% from last month</div>
+          <div className="mt-2 text-xs text-cobalt-600">↑ 18% from last month</div>
         </div>
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <div className="text-sm text-muted-foreground mb-2">Active Mentees</div>
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
+          <div className="text-sm text-navy-600 mb-2">Active Mentees</div>
           <div className="text-3xl font-semibold">{user.connections || 0}</div>
-          <div className="mt-2 text-xs text-green-600">↑ 5 new this month</div>
+          <div className="mt-2 text-xs text-cobalt-600">↑ 5 new this month</div>
         </div>
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <div className="text-sm text-muted-foreground mb-2">Session Rating</div>
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
+          <div className="text-sm text-navy-600 mb-2">Session Rating</div>
           <div className="text-3xl font-semibold">4.8/5</div>
-          <div className="mt-2 text-xs text-green-600">↑ 0.2 from last month</div>
+          <div className="mt-2 text-xs text-cobalt-600">↑ 0.2 from last month</div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
           <h3 className="text-lg font-medium mb-4">Monthly Earnings</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={earningsData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              <AreaChart data={earningsData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip formatter={(value) => [`$${value}`, "Earnings"]} />
-                <Bar dataKey="amount" fill="#10b981" />
-              </BarChart>
+                <Area type="monotone" dataKey="amount" fill="#3372ff" stroke="#0047cc" fillOpacity={0.6} />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
           <h3 className="text-lg font-medium mb-4">Session Types</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -91,9 +132,41 @@ export default function MentorDashboard({ user }: MentorDashboardProps) {
           </div>
         </div>
       </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-lg font-medium mb-4">Mentees Growth</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={menteesGrowthData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip formatter={(value) => [`${value}`, "Mentees"]} />
+                <Bar dataKey="mentees" fill="#3372ff" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-lg font-medium mb-4">Rating Trend</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={ratingsData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis domain={[3, 5]} />
+                <Tooltip formatter={(value) => [`${value}`, "Rating"]} />
+                <Line type="monotone" dataKey="rating" stroke="#0047cc" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
           <h3 className="text-lg font-medium mb-4">Upcoming Sessions</h3>
           <div className="space-y-4">
             {MOCK_USERS.slice(0, 3).map((mentee, index) => (
@@ -105,15 +178,27 @@ export default function MentorDashboard({ user }: MentorDashboardProps) {
                 />
                 <div className="flex-grow">
                   <div className="font-medium">{mentee.name}</div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-navy-600">
                     {index === 0 ? "Today" : index === 1 ? "Tomorrow" : "Friday"}, {2 + index}:00 PM • 45 min session
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="h-8">
-                    Reschedule
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="h-8 border-navy-200 text-navy-700"
+                    onClick={() => handleStartCall(mentee.name, 'message')}
+                  >
+                    <MessageSquare className="h-4 w-4 mr-1" />
+                    Message
                   </Button>
-                  <Button variant="default" size="sm" className="h-8 bg-primary hover:bg-primary/90">
+                  <Button 
+                    variant="default" 
+                    size="sm" 
+                    className="h-8 bg-cobalt-600 hover:bg-cobalt-700"
+                    onClick={() => handleStartCall(mentee.name, 'call')}
+                  >
+                    <Phone className="h-4 w-4 mr-1" />
                     Join
                   </Button>
                 </div>
@@ -121,42 +206,50 @@ export default function MentorDashboard({ user }: MentorDashboardProps) {
             ))}
           </div>
           <div className="mt-4 pt-4 border-t border-gray-100">
-            <Link to="/calendar" className="text-sm text-primary hover:text-primary/90 font-medium">
+            <Link to="/calendar" className="text-sm text-cobalt-600 hover:text-cobalt-700 font-medium">
               View full calendar →
             </Link>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Recent Reviews</h3>
+        <div className="bg-white p-6 rounded-xl border border-navy-200 shadow-sm">
+          <h3 className="text-lg font-medium mb-4">Connection Requests</h3>
           <div className="space-y-4">
-            {MOCK_USERS.slice(0, 3).map((mentee) => (
-              <div key={mentee.id} className="p-4 bg-gray-50 rounded-lg">
-                <div className="flex items-center mb-2">
-                  <img
-                    src={mentee.avatar}
-                    alt={mentee.name}
-                    className="w-8 h-8 rounded-full object-cover mr-2"
-                  />
+            {MOCK_USERS.slice(3, 6).map((mentee) => (
+              <div key={mentee.id} className="p-4 bg-gray-50 rounded-lg flex items-center gap-4">
+                <img
+                  src={mentee.avatar}
+                  alt={mentee.name}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div className="flex-grow">
                   <div className="font-medium">{mentee.name}</div>
-                  <div className="ml-auto text-amber-500 flex">
-                    {Array(5).fill(0).map((_, i) => (
-                      <svg key={i} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                        <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
-                      </svg>
-                    ))}
+                  <div className="text-sm text-navy-600">
+                    {mentee.role} • {mentee.location}
                   </div>
                 </div>
-                <div className="text-sm text-muted-foreground">
-                  "Great session! Really helped me understand the key concepts and provided practical advice."
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="h-8 border-navy-200" 
+                    onClick={() => handleConnectionAction(mentee.name, 'decline')}
+                  >
+                    <XCircle className="h-4 w-4 mr-1 text-red-500" />
+                    Decline
+                  </Button>
+                  <Button 
+                    variant="default" 
+                    size="sm" 
+                    className="h-8 bg-cobalt-600 hover:bg-cobalt-700" 
+                    onClick={() => handleConnectionAction(mentee.name, 'accept')}
+                  >
+                    <CheckCircle2 className="h-4 w-4 mr-1" />
+                    Accept
+                  </Button>
                 </div>
               </div>
             ))}
-          </div>
-          <div className="mt-4 pt-4 border-t border-gray-100">
-            <Link to="/reviews" className="text-sm text-primary hover:text-primary/90 font-medium">
-              View all reviews →
-            </Link>
           </div>
         </div>
       </div>
