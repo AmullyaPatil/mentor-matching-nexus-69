@@ -37,7 +37,7 @@ export default function ProfileCard({
   connections,
   industry,
   experience,
-  rating,
+  rating = 4.5, // Default rating to ensure all cards have ratings
   compact = false,
   isWishlisted = false,
   onWishlistToggle
@@ -66,6 +66,19 @@ export default function ProfileCard({
             <p className="text-sm text-navy-600 line-clamp-2">
               {bio}
             </p>
+            
+            {/* Add rating to compact view */}
+            <div className="flex items-center mt-1 text-yellow-500">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <Star 
+                  key={index} 
+                  className={`h-3 w-3 ${index < Math.floor(rating) ? "fill-yellow-500" : "fill-navy-200"}`} 
+                />
+              ))}
+              <span className="ml-1 text-xs text-navy-600">
+                {rating.toFixed(1)}
+              </span>
+            </div>
           </div>
         </Link>
         
@@ -135,19 +148,18 @@ export default function ProfileCard({
                 {USER_ROLE_LABELS[role]}
               </Badge>
               
-              {rating !== undefined && (
-                <div className="flex items-center mt-1 text-yellow-500">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star 
-                      key={index} 
-                      className={`h-4 w-4 ${index < Math.floor(typeof rating === 'number' ? rating : 0) ? "fill-yellow-500" : "fill-navy-200"}`} 
-                    />
-                  ))}
-                  <span className="ml-1 text-sm text-navy-600">
-                    {typeof rating === 'number' ? rating.toFixed(1) : 'N/A'}
-                  </span>
-                </div>
-              )}
+              {/* Always show rating */}
+              <div className="flex items-center mt-1 text-yellow-500">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Star 
+                    key={index} 
+                    className={`h-4 w-4 ${index < Math.floor(rating) ? "fill-yellow-500" : "fill-navy-200"}`} 
+                  />
+                ))}
+                <span className="ml-1 text-sm text-navy-600">
+                  {rating.toFixed(1)}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -201,53 +213,14 @@ export default function ProfileCard({
       </div>
 
       <div className="mt-auto p-4 pt-0">
-        {!showActions ? (
-          <div className="flex space-x-2">
-            <Button 
-              asChild 
-              className="w-full bg-navy-700 hover:bg-navy-800 text-white"
-            >
-              <Link to={`/profiles/${id}`}>View Profile</Link>
-            </Button>
-            <Button 
-              variant="outline" 
-              className="flex-shrink-0 border-navy-200 text-navy-700 hover:bg-navy-50"
-              onClick={() => setShowActions(true)}
-            >
-              Connect
-            </Button>
-          </div>
-        ) : (
-          <div className="flex space-x-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="border-navy-200 text-navy-700 hover:bg-navy-50 flex-1 flex items-center justify-center"
-              onClick={handleMessageClick}
-            >
-              <MessageSquare className="h-4 w-4 mr-1" />
-              Message
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="border-navy-200 text-navy-700 hover:bg-navy-50 flex-1 flex items-center justify-center"
-              onClick={handleScheduleClick}
-            >
-              <Calendar className="h-4 w-4 mr-1" />
-              Schedule
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="border-navy-200 text-navy-700 hover:bg-navy-50 flex-1 flex items-center justify-center"
-              onClick={handleCallClick}
-            >
-              <Phone className="h-4 w-4 mr-1" />
-              Call
-            </Button>
-          </div>
-        )}
+        <div className="flex space-x-2">
+          <Button 
+            asChild 
+            className="w-full bg-navy-700 hover:bg-navy-800 text-white"
+          >
+            <Link to={`/profiles/${id}`}>View Profile</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
