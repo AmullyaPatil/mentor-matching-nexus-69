@@ -135,15 +135,17 @@ export default function ProfileCard({
                 {USER_ROLE_LABELS[role]}
               </Badge>
               
-              {rating && (
+              {rating !== undefined && (
                 <div className="flex items-center mt-1 text-yellow-500">
                   {Array.from({ length: 5 }).map((_, index) => (
                     <Star 
                       key={index} 
-                      className={`h-4 w-4 ${index < Math.floor(rating) ? "fill-yellow-500" : "fill-navy-200"}`} 
+                      className={`h-4 w-4 ${index < Math.floor(typeof rating === 'number' ? rating : 0) ? "fill-yellow-500" : "fill-navy-200"}`} 
                     />
                   ))}
-                  <span className="ml-1 text-sm text-navy-600">{rating.toFixed(1)}</span>
+                  <span className="ml-1 text-sm text-navy-600">
+                    {typeof rating === 'number' ? rating.toFixed(1) : 'N/A'}
+                  </span>
                 </div>
               )}
             </div>
