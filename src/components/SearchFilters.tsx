@@ -88,19 +88,19 @@ export default function SearchFilters({
   };
 
   const hasActiveFilters = selectedRoles.length > 0 || selectedExpertise.length > 0 || 
-                           (selectedLocation !== "" && selectedLocation !== "any-location") || 
-                           (selectedExperience !== "" && selectedExperience !== "any-experience") || 
-                           selectedIndustry.length > 0;
+                          selectedLocation !== "any-location" || 
+                          selectedExperience !== "any-experience" || 
+                          selectedIndustry.length > 0;
 
   return (
-    <div className="w-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+    <div className="w-full bg-white rounded-xl border border-navy-200 shadow-sm overflow-hidden">
       <div className="p-4">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {/* Role filter */}
           <div>
-            <Label className="mb-2 block font-medium text-sm text-gray-700">Role</Label>
+            <Label className="mb-2 block font-medium text-sm text-navy-700">Role</Label>
             <Select>
-              <SelectTrigger className="border-gray-200 focus:ring-teal-500">
+              <SelectTrigger className="border-navy-200 focus:ring-cobalt-500">
                 <SelectValue placeholder="Select role" />
               </SelectTrigger>
               <SelectContent>
@@ -109,7 +109,7 @@ export default function SearchFilters({
                     key={role} 
                     value={role}
                     onClick={() => handleRoleChange(role)}
-                    className={selectedRoles.includes(role) ? "bg-teal-50 text-teal-700" : ""}
+                    className={selectedRoles.includes(role) ? "bg-cobalt-50 text-cobalt-700" : ""}
                   >
                     {USER_ROLE_LABELS[role]}
                   </SelectItem>
@@ -123,12 +123,12 @@ export default function SearchFilters({
                   <Badge
                     key={role}
                     variant="secondary"
-                    className="bg-teal-100 text-teal-700 hover:bg-teal-200"
+                    className="bg-cobalt-100 text-cobalt-700 hover:bg-cobalt-200"
                   >
                     <span>{USER_ROLE_LABELS[role]}</span>
                     <button
                       onClick={() => handleRoleChange(role)}
-                      className="ml-1 hover:text-teal-900"
+                      className="ml-1 hover:text-cobalt-900"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -140,9 +140,9 @@ export default function SearchFilters({
 
           {/* Expertise filter */}
           <div>
-            <Label className="mb-2 block font-medium text-sm text-gray-700">Expertise</Label>
+            <Label className="mb-2 block font-medium text-sm text-navy-700">Expertise</Label>
             <Select>
-              <SelectTrigger className="border-gray-200 focus:ring-teal-500">
+              <SelectTrigger className="border-navy-200 focus:ring-cobalt-500">
                 <SelectValue placeholder="Select expertise" />
               </SelectTrigger>
               <SelectContent>
@@ -151,7 +151,7 @@ export default function SearchFilters({
                     key={expertise} 
                     value={expertise}
                     onClick={() => handleExpertiseChange(expertise)}
-                    className={selectedExpertise.includes(expertise) ? "bg-teal-50 text-teal-700" : ""}
+                    className={selectedExpertise.includes(expertise) ? "bg-cobalt-50 text-cobalt-700" : ""}
                   >
                     {expertise}
                   </SelectItem>
@@ -165,12 +165,12 @@ export default function SearchFilters({
                   <Badge
                     key={expertise}
                     variant="secondary"
-                    className="bg-teal-100 text-teal-700 hover:bg-teal-200"
+                    className="bg-cobalt-100 text-cobalt-700 hover:bg-cobalt-200"
                   >
                     <span>{expertise}</span>
                     <button
                       onClick={() => handleExpertiseChange(expertise)}
-                      className="ml-1 hover:text-teal-900"
+                      className="ml-1 hover:text-cobalt-900"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -182,13 +182,12 @@ export default function SearchFilters({
           
           {/* Location filter */}
           <div>
-            <Label className="mb-2 block font-medium text-sm text-gray-700">Location</Label>
+            <Label className="mb-2 block font-medium text-sm text-navy-700">Location</Label>
             <Select value={selectedLocation} onValueChange={onLocationChange}>
-              <SelectTrigger className="border-gray-200 focus:ring-teal-500">
+              <SelectTrigger className="border-navy-200 focus:ring-cobalt-500">
                 <SelectValue placeholder="Select location" />
               </SelectTrigger>
               <SelectContent>
-                {/* Use placeholder value with a non-empty string */}
                 <SelectItem value="any-location">Any location</SelectItem>
                 {availableLocations.map(location => (
                   <SelectItem key={location} value={location}>{location}</SelectItem>
@@ -200,12 +199,12 @@ export default function SearchFilters({
               <div className="mt-2 flex flex-wrap gap-2">
                 <Badge
                   variant="secondary"
-                  className="bg-teal-100 text-teal-700 hover:bg-teal-200"
+                  className="bg-cobalt-100 text-cobalt-700 hover:bg-cobalt-200"
                 >
                   <span>{selectedLocation}</span>
                   <button
                     onClick={() => onLocationChange("any-location")}
-                    className="ml-1 hover:text-teal-900"
+                    className="ml-1 hover:text-cobalt-900"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -216,13 +215,12 @@ export default function SearchFilters({
           
           {/* Experience filter */}
           <div>
-            <Label className="mb-2 block font-medium text-sm text-gray-700">Experience</Label>
+            <Label className="mb-2 block font-medium text-sm text-navy-700">Experience</Label>
             <Select value={selectedExperience} onValueChange={onExperienceChange}>
-              <SelectTrigger className="border-gray-200 focus:ring-teal-500">
+              <SelectTrigger className="border-navy-200 focus:ring-cobalt-500">
                 <SelectValue placeholder="Years of experience" />
               </SelectTrigger>
               <SelectContent>
-                {/* Use placeholder value with a non-empty string */}
                 <SelectItem value="any-experience">Any experience</SelectItem>
                 {availableExperience.map(exp => (
                   <SelectItem key={exp} value={exp}>{exp}</SelectItem>
@@ -234,12 +232,12 @@ export default function SearchFilters({
               <div className="mt-2 flex flex-wrap gap-2">
                 <Badge
                   variant="secondary"
-                  className="bg-teal-100 text-teal-700 hover:bg-teal-200"
+                  className="bg-cobalt-100 text-cobalt-700 hover:bg-cobalt-200"
                 >
                   <span>{selectedExperience}</span>
                   <button
                     onClick={() => onExperienceChange("any-experience")}
-                    className="ml-1 hover:text-teal-900"
+                    className="ml-1 hover:text-cobalt-900"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -250,9 +248,9 @@ export default function SearchFilters({
           
           {/* Industry filter */}
           <div>
-            <Label className="mb-2 block font-medium text-sm text-gray-700">Industry</Label>
+            <Label className="mb-2 block font-medium text-sm text-navy-700">Industry</Label>
             <Select>
-              <SelectTrigger className="border-gray-200 focus:ring-teal-500">
+              <SelectTrigger className="border-navy-200 focus:ring-cobalt-500">
                 <SelectValue placeholder="Select industry" />
               </SelectTrigger>
               <SelectContent>
@@ -261,7 +259,7 @@ export default function SearchFilters({
                     key={industry} 
                     value={industry}
                     onClick={() => handleIndustryChange(industry)}
-                    className={selectedIndustry.includes(industry) ? "bg-teal-50 text-teal-700" : ""}
+                    className={selectedIndustry.includes(industry) ? "bg-cobalt-50 text-cobalt-700" : ""}
                   >
                     {industry}
                   </SelectItem>
@@ -275,12 +273,12 @@ export default function SearchFilters({
                   <Badge
                     key={industry}
                     variant="secondary"
-                    className="bg-teal-100 text-teal-700 hover:bg-teal-200"
+                    className="bg-cobalt-100 text-cobalt-700 hover:bg-cobalt-200"
                   >
                     <span>{industry}</span>
                     <button
                       onClick={() => handleIndustryChange(industry)}
-                      className="ml-1 hover:text-teal-900"
+                      className="ml-1 hover:text-cobalt-900"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -297,7 +295,7 @@ export default function SearchFilters({
               variant="ghost"
               size="sm"
               onClick={clearFilters}
-              className="text-sm text-teal-600 hover:text-teal-700 hover:bg-teal-50"
+              className="text-sm text-cobalt-600 hover:text-cobalt-700 hover:bg-cobalt-50"
             >
               <X className="h-4 w-4 mr-1" />
               Clear all filters

@@ -63,40 +63,33 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom colors for teal/green theme
-				main: "#f0fdf9", // 60% primary background color (light teal tint)
-				highlight: "#10b981", // 30% secondary color (green)
-				accent: {
-					DEFAULT: "#0d9488", // 10% accent color (teal)
-					secondary: "#34d399", // Alternative accent (light green)
-					light: "#d1fae5", // Light version of accent (very light teal)
+				// Navy blue, cobalt blue, and white theme (60-30-10 rule)
+				navy: {
+					50: '#f0f4fa',
+					100: '#d9e2f5',
+					200: '#b3c6eb',
+					300: '#8da9e0',
+					400: '#668dd6',
+					500: '#4070cc',
+					600: '#3355a3',
+					700: '#26408b',
+					800: '#1a2b59',
+					900: '#0d152c',
+					950: '#060b16',
 				},
-				teal: {
-					50: '#f0fdfa',
-					100: '#ccfbf1',
-					200: '#99f6e4',
-					300: '#5eead4',
-					400: '#2dd4bf',
-					500: '#14b8a6',
-					600: '#0d9488',
-					700: '#0f766e',
-					800: '#115e59',
-					900: '#134e4a',
-					950: '#042f2e',
+				cobalt: {
+					50: '#ebf1ff',
+					100: '#d6e3ff',
+					200: '#adc7ff',
+					300: '#85aaff',
+					400: '#5c8eff',
+					500: '#3372ff',
+					600: '#0047cc',
+					700: '#0035a3',
+					800: '#002359',
+					900: '#00122c',
+					950: '#000914',
 				},
-				green: {
-					50: '#f0fdf4',
-					100: '#dcfce7',
-					200: '#bbf7d0',
-					300: '#86efac',
-					400: '#4ade80',
-					500: '#22c55e',
-					600: '#16a34a',
-					700: '#15803d',
-					800: '#166534',
-					900: '#14532d',
-					950: '#052e16',
-				}
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
@@ -131,6 +124,11 @@ export default {
 				'slide-in-left': {
 					'0%': { transform: 'translateX(-100%)' },
 					'100%': { transform: 'translateX(0)' }
+				},
+				'highlight': {
+					'0%': { backgroundColor: 'transparent', color: 'inherit' },
+					'50%': { backgroundColor: 'rgb(51, 114, 255, 0.2)', color: 'rgb(51, 114, 255)' },
+					'100%': { backgroundColor: 'transparent', color: 'inherit' }
 				}
 			},
 			animation: {
@@ -139,12 +137,13 @@ export default {
 				'fade-in': 'fade-in 0.5s ease-out',
 				'fade-up': 'fade-up 0.5s ease-out',
 				'slide-in-right': 'slide-in-right 0.5s ease-out',
-				'slide-in-left': 'slide-in-left 0.5s ease-out'
+				'slide-in-left': 'slide-in-left 0.5s ease-out',
+				'highlight': 'highlight 2s ease-in-out'
 			},
 			backgroundImage: {
-				'gradient-primary': 'linear-gradient(to right, #10b981, #34d399)',
-				'gradient-secondary': 'linear-gradient(to right, #0d9488, #10b981)',
-				'gradient-accent': 'linear-gradient(135deg, #f0fdf9 0%, #d1fae5 100%)',
+				'gradient-primary': 'linear-gradient(to right, #0047cc, #3372ff)',
+				'gradient-secondary': 'linear-gradient(to right, #1a2b59, #0047cc)',
+				'gradient-accent': 'linear-gradient(135deg, #f0f4fa 0%, #d6e3ff 100%)',
 			}
 		}
 	},
