@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -604,4 +605,77 @@ export default function Dashboard() {
                         {/* New Resource */}
                         <div className="p-4 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all">
                           <div className="flex items-center">
-                            <div className="w-
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-200 to-amber-300 text-amber-700 flex items-center justify-center mr-4">
+                              <BookOpen className="h-5 w-5" />
+                            </div>
+                            <div className="flex-grow">
+                              <div className="font-medium text-navy-800">New Resource Available</div>
+                              <div className="text-sm text-navy-600 mt-1">"10 Tips for Effective Mentorship" published</div>
+                              <div className="text-xs text-muted-foreground mt-1">3 days ago</div>
+                            </div>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <CheckCircle2 className="h-4 w-4 text-gray-400" />
+                            </Button>
+                          </div>
+                          <div className="mt-3 pl-14">
+                            <Button variant="outline" size="sm" className="h-8 text-xs px-3">Read Now</Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Resources Tab */}
+            {activeTab === 'resources' && (
+              <div className="grid grid-cols-1 gap-6">
+                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                  <h3 className="text-lg font-medium mb-3 text-navy-900">Learning Resources</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {Array(6).fill(0).map((_, i) => (
+                      <div key={i} className="p-3 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div className="font-medium text-sm">{
+                          i === 0 ? "Building Your Mentor Network" :
+                          i === 1 ? "Effective Pitching Strategies" :
+                          i === 2 ? "Finding the Right Co-Founder" :
+                          i === 3 ? "Startup Financial Planning" :
+                          i === 4 ? "Product Market Fit Guide" :
+                          "Scaling Your Business"
+                        }</div>
+                        <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                          {i === 0 ? "Learn how to build and nurture meaningful relationships with mentors in your industry." :
+                           i === 1 ? "Master the art of pitching your ideas to investors, partners, and customers." :
+                           i === 2 ? "Tips and strategies for finding a compatible co-founder who complements your skills." :
+                           i === 3 ? "Essential financial planning techniques for early-stage startups." :
+                           i === 4 ? "How to identify, test, and validate product market fit for your startup." :
+                           "Strategies for scaling your business while maintaining quality and culture."
+                          }
+                        </div>
+                        <div className="mt-2 flex">
+                          <div className="text-xs text-cobalt-600 mr-2">{Math.floor(Math.random() * 8) + 3} min read</div>
+                          <div className="text-xs text-muted-foreground">{Math.floor(Math.random() * 600) + 100} reads</div>
+                        </div>
+                        <div className="mt-2">
+                          <Button variant="outline" size="sm" className="w-full h-7 text-xs">Read Now</Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-gray-100 text-center">
+                    <Link to="/knowledge-hub" className="text-xs text-cobalt-600 hover:text-cobalt-700 font-medium">
+                      Browse all resources →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
