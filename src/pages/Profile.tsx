@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,7 +8,8 @@ import { UserRole, USER_ROLE_LABELS } from "@/lib/constants";
 import { toast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Edit, MapPin, Briefcase, User, Mail } from "lucide-react";
+import { Edit, MapPin, Briefcase, User, Mail, Award, Shield, Trophy, Star, Clock } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default function Profile() {
   const { user } = useAuth();
@@ -19,7 +21,13 @@ export default function Profile() {
     bio: "Passionate startup founder focused on educational technology. Looking for mentors and potential investors for my seed round.",
     location: "San Francisco, CA",
     expertise: ["Product Management", "UX Design", "EdTech"],
-    experienceYears: "5"
+    experienceYears: "5",
+    milestones: [
+      { title: "Founding Member", type: "founder", icon: <Trophy className="h-3 w-3 mr-1" /> },
+      { title: "50+ Connections", type: "milestone", icon: <Star className="h-3 w-3 mr-1" /> },
+      { title: "Verified Profile", type: "verified", icon: <Shield className="h-3 w-3 mr-1" /> },
+      { title: "1 Year Member", type: "achievement", icon: <Clock className="h-3 w-3 mr-1" /> },
+    ]
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -251,6 +259,17 @@ export default function Profile() {
                         <p className="text-muted-foreground mb-6">
                           {formData.bio}
                         </p>
+
+                        {/* Milestone Badges */}
+                        <h3 className="text-lg font-medium mb-2 gradient-text">Achievements & Milestones</h3>
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {formData.milestones.map((milestone, index) => (
+                            <Badge key={index} variant={milestone.type as any} className="flex items-center px-3 py-1">
+                              {milestone.icon}
+                              {milestone.title}
+                            </Badge>
+                          ))}
+                        </div>
 
                         <h3 className="text-lg font-medium mb-2 gradient-text">Expertise</h3>
                         <div className="flex flex-wrap gap-2 mb-6">

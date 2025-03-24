@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { USER_ROLE_LABELS, UserRole } from "@/lib/constants";
-import { MapPin, Users, Briefcase, Building2, Star, Heart, MessageSquare, Calendar, Phone } from "lucide-react";
+import { MapPin, Users, Briefcase, Building2, Star, Heart, MessageSquare, Calendar, Phone, Shield, Award, Trophy } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 interface ProfileCardProps {
@@ -23,6 +23,11 @@ interface ProfileCardProps {
   compact?: boolean;
   isWishlisted?: boolean;
   onWishlistToggle?: () => void;
+  milestones?: {
+    title: string;
+    type: string;
+    icon: React.ReactNode;
+  }[];
 }
 
 export default function ProfileCard({
@@ -40,13 +45,24 @@ export default function ProfileCard({
   rating = 4.5, // Default rating to ensure all cards have ratings
   compact = false,
   isWishlisted = false,
-  onWishlistToggle
+  onWishlistToggle,
+  milestones = []
 }: ProfileCardProps) {
   const [showActions, setShowActions] = useState(false);
   const skills = expertise || interests || [];
   
   // Ensure rating is a number to avoid "toFixed is not a function" error
   const ratingValue = typeof rating === 'number' ? rating : 4.5;
+  
+  // Default milestones if none provided
+  const displayMilestones = milestones.length > 0 ? milestones : [
+    { title: "Active Member", type: "achievement", icon: <Star className="h-3 w-3 mr-1" /> },
+    role === UserRole.MENTOR ? 
+      { title: "Verified Mentor", type: "verified", icon: <Shield className="h-3 w-3 mr-1" /> } :
+    role === UserRole.INVESTOR ? 
+      { title: "Verified Investor", type: "founder", icon: <Trophy className="h-3 w-3 mr-1" /> } :
+      { title: "Verified Profile", type: "verified", icon: <Shield className="h-3 w-3 mr-1" /> }
+  ];
   
   if (compact) {
     return (
@@ -65,6 +81,14 @@ export default function ProfileCard({
               <Badge variant="secondary" className="text-xs bg-cobalt-100 text-cobalt-700 hover:bg-cobalt-200">
                 {USER_ROLE_LABELS[role]}
               </Badge>
+              
+              {/* Show one milestone badge in compact view */}
+              {displayMilestones.length > 0 && (
+                <Badge variant={displayMilestones[0].type as any} className="text-xs ml-1 flex items-center">
+                  {displayMilestones[0].icon}
+                  {displayMilestones[0].title}
+                </Badge>
+              )}
             </div>
             <p className="text-sm text-navy-600 line-clamp-2">
               {bio}
@@ -167,6 +191,24 @@ export default function ProfileCard({
           </div>
 
           <p className="text-navy-600 mb-4 line-clamp-3">{bio}</p>
+
+          {/* Milestone Badges */}
+          {displayMilestones.length > 0 && (
+            <div className="mb-3">
+              <div className="flex flex-wrap gap-2">
+                {displayMilestones.map((milestone, index) => (
+                  <Badge 
+                    key={index} 
+                    variant={milestone.type as any} 
+                    className="flex items-center text-xs px-2 py-0.5"
+                  >
+                    {milestone.icon}
+                    {milestone.title}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
 
           {skills.length > 0 && (
             <div className="mb-4">

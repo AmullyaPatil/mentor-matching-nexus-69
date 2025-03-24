@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -6,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { USER_ROLE_LABELS, UserRole } from "@/lib/constants";
-import { MessageCircle, Phone, Video, Star, MapPin, BookOpen, Briefcase, Calendar, Users, Award, ArrowLeft } from "lucide-react";
+import { MessageCircle, Phone, Video, Star, MapPin, BookOpen, Briefcase, Calendar, Users, Award, ArrowLeft, Shield, Trophy, Clock, Medal } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
@@ -35,6 +34,12 @@ interface Testimonial {
   date: string;
 }
 
+interface Milestone {
+  title: string;
+  type: string;
+  icon: React.ReactNode;
+}
+
 interface ProfileData {
   id: string;
   name: string;
@@ -53,6 +58,7 @@ interface ProfileData {
   connectionServices: ConnectionService[];
   testimonials: Testimonial[];
   about: string;
+  milestones: Milestone[];
 }
 
 const mockProfiles: ProfileData[] = [
@@ -71,6 +77,12 @@ const mockProfiles: ProfileData[] = [
     company: "GrowthLabs",
     position: "Chief Operating Officer",
     about: "I'm a seasoned tech executive with a passion for helping startups scale successfully. Having led operations at two unicorn startups and mentored dozens of founders, I bring practical experience in navigating growth challenges. My approach combines strategic vision with hands-on problem solving. I'm particularly interested in companies applying artificial intelligence to solve meaningful problems.",
+    milestones: [
+      { title: "Top Mentor", type: "achievement", icon: <Award className="h-3 w-3 mr-1" /> },
+      { title: "250+ Connections", type: "milestone", icon: <Users className="h-3 w-3 mr-1" /> },
+      { title: "Verified Mentor", type: "verified", icon: <Shield className="h-3 w-3 mr-1" /> },
+      { title: "Early Adopter", type: "pro", icon: <Star className="h-3 w-3 mr-1" /> }
+    ],
     connectionServices: [
       {
         id: "s1",
@@ -154,6 +166,12 @@ const mockProfiles: ProfileData[] = [
     company: "Horizon Ventures",
     position: "Managing Partner",
     about: "I'm an angel investor and venture partner focusing on early-stage startups in the fintech and B2B SaaS spaces. Prior to investing, I co-founded a fintech company that was acquired in 2018. I look for founders with deep domain expertise who are solving real problems with scalable solutions. I'm particularly passionate about startups working on financial inclusion and democratizing access to financial services.",
+    milestones: [
+      { title: "Angel Investor", type: "founder", icon: <Trophy className="h-3 w-3 mr-1" /> },
+      { title: "400+ Connections", type: "milestone", icon: <Users className="h-3 w-3 mr-1" /> },
+      { title: "Verified Investor", type: "verified", icon: <Shield className="h-3 w-3 mr-1" /> },
+      { title: "5+ Years Member", type: "achievement", icon: <Clock className="h-3 w-3 mr-1" /> }
+    ],
     connectionServices: [
       {
         id: "s1",
@@ -219,6 +237,12 @@ const mockProfiles: ProfileData[] = [
     company: "TechGiants",
     position: "Senior Product Director",
     about: "I'm a product leader with experience building consumer and enterprise products used by millions. I've led product teams at both startups and large tech companies, with a focus on creating intuitive, user-centered experiences. My passion is helping product managers and designers develop their skills and create products that truly solve user problems. I believe in data-informed decision making balanced with strong design intuition.",
+    milestones: [
+      { title: "Product Expert", type: "pro", icon: <Medal className="h-3 w-3 mr-1" /> },
+      { title: "UX Specialist", type: "achievement", icon: <Award className="h-3 w-3 mr-1" /> },
+      { title: "Verified Profile", type: "verified", icon: <Shield className="h-3 w-3 mr-1" /> },
+      { title: "100+ Connections", type: "milestone", icon: <Users className="h-3 w-3 mr-1" /> }
+    ],
     connectionServices: [
       {
         id: "s1",
@@ -404,6 +428,16 @@ export default function ProfileView() {
                 </div>
               </div>
               <p className="mt-4 text-teal-800">{profile.bio}</p>
+              
+              <div className="mt-4 flex flex-wrap gap-2">
+                {profile.milestones.map((milestone, index) => (
+                  <Badge key={index} variant={milestone.type as any} className="flex items-center px-3 py-1">
+                    {milestone.icon}
+                    {milestone.title}
+                  </Badge>
+                ))}
+              </div>
+              
               <div className="mt-4 flex flex-wrap gap-2">
                 {profile.expertise.map((skill, index) => (
                   <Badge key={index} variant="outline" className="bg-white border-teal-200 text-teal-700">
