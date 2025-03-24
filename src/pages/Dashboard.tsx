@@ -23,9 +23,11 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
+type DashboardTab = 'dashboard' | 'connections' | 'history' | 'notifications' | 'resources';
+
 export default function Dashboard() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab<'dashboard' | 'connections' | 'history' | 'notifications' | 'resources'>('dashboard');
+  const [activeTab, setActiveTab] = useState<DashboardTab>('dashboard');
 
   // Redirect to auth if not logged in
   if (!user) {
@@ -162,7 +164,7 @@ export default function Dashboard() {
             </div>
 
             {/* Quick Stats - More compact */}
-            <div className="grid grid-cols-5 gap-2 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mb-4">
               <Card className="bg-white border-none shadow-sm hover:shadow transition-shadow">
                 <CardContent className="p-3 flex flex-col items-center text-center">
                   <div className="h-8 w-8 rounded-full bg-cobalt-100 text-cobalt-700 flex items-center justify-center mb-1">
@@ -219,20 +221,20 @@ export default function Dashboard() {
 
             {/* Connections Tab - Make more compact */}
             {activeTab === 'connections' && (
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
                 <div className="lg:col-span-1">
-                  <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                    <h3 className="text-md font-medium mb-3 text-navy-900">Your Connections</h3>
-                    <div className="space-y-2 max-h-[500px] overflow-y-auto pr-2">
+                  <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm">
+                    <h3 className="text-sm font-medium mb-2 text-navy-900">Your Connections</h3>
+                    <div className="space-y-1 max-h-[400px] overflow-y-auto pr-1">
                       {Array(5).fill(0).map((_, i) => (
-                        <div key={i} className="flex items-center p-2 rounded-lg hover:bg-cobalt-50 cursor-pointer">
+                        <div key={i} className="flex items-center p-1.5 rounded-lg hover:bg-cobalt-50 cursor-pointer">
                           <img 
                             src={`https://randomuser.me/api/portraits/${i % 2 ? 'women' : 'men'}/${i + 1}.jpg`} 
                             alt="User" 
-                            className="w-8 h-8 rounded-full mr-2 object-cover"
+                            className="w-7 h-7 rounded-full mr-2 object-cover"
                           />
                           <div>
-                            <div className="font-medium text-sm">Connection {i + 1}</div>
+                            <div className="font-medium text-xs">Connection {i + 1}</div>
                             <div className="text-xs text-muted-foreground">Last active: 2h ago</div>
                           </div>
                           <div className="ml-auto flex">
@@ -241,7 +243,7 @@ export default function Dashboard() {
                         </div>
                       ))}
                     </div>
-                    <div className="mt-3 pt-3 border-t border-gray-100">
+                    <div className="mt-2 pt-2 border-t border-gray-100">
                       <Link to="/search" className="text-xs text-cobalt-600 hover:text-cobalt-700 font-medium">
                         Find more connections →
                       </Link>
@@ -249,31 +251,31 @@ export default function Dashboard() {
                   </div>
                 </div>
                 
-                <div className="lg:col-span-3">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                      <h3 className="text-md font-medium mb-3 text-navy-900">Connection Requests</h3>
-                      <div className="space-y-3">
+                <div className="lg:col-span-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                    <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm">
+                      <h3 className="text-sm font-medium mb-2 text-navy-900">Connection Requests</h3>
+                      <div className="space-y-2">
                         {Array(3).fill(0).map((_, i) => (
-                          <div key={i} className="p-3 bg-gray-50 rounded-lg flex items-center gap-3">
+                          <div key={i} className="p-2 bg-gray-50 rounded-lg flex items-center gap-2">
                             <img 
                               src={`https://randomuser.me/api/portraits/${i % 2 ? 'men' : 'women'}/${i + 5}.jpg`} 
                               alt="User" 
-                              className="w-10 h-10 rounded-full object-cover"
+                              className="w-8 h-8 rounded-full object-cover"
                             />
-                            <div className="flex-grow">
-                              <div className="font-medium text-sm">User {i + 1}</div>
+                            <div className="flex-grow min-w-0">
+                              <div className="font-medium text-xs">User {i + 1}</div>
                               <div className="text-xs text-muted-foreground truncate">
                                 {i === 0 ? 'Looking to connect about AI development opportunities' : 
                                 i === 1 ? 'Interested in discussing potential partnership' :
                                 'Would like to schedule a mentorship session'}
                               </div>
                             </div>
-                            <div className="flex gap-1">
-                              <Button variant="outline" size="sm" className="h-7 text-xs">
+                            <div className="flex gap-1 shrink-0">
+                              <Button variant="outline" size="sm" className="h-6 text-xs px-2">
                                 Decline
                               </Button>
-                              <Button className="bg-cobalt-600 hover:bg-cobalt-700 h-7 text-xs">
+                              <Button className="bg-cobalt-600 hover:bg-cobalt-700 h-6 text-xs px-2">
                                 Accept
                               </Button>
                             </div>
@@ -282,27 +284,27 @@ export default function Dashboard() {
                       </div>
                     </div>
                     
-                    <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                      <h3 className="text-md font-medium mb-3 text-navy-900">Upcoming Sessions</h3>
-                      <div className="space-y-3">
+                    <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm">
+                      <h3 className="text-sm font-medium mb-2 text-navy-900">Upcoming Sessions</h3>
+                      <div className="space-y-2">
                         {Array(3).fill(0).map((_, i) => (
-                          <div key={i} className="p-3 bg-gray-50 rounded-lg flex items-center gap-3">
+                          <div key={i} className="p-2 bg-gray-50 rounded-lg flex items-center gap-2">
                             <img 
                               src={`https://randomuser.me/api/portraits/${i % 2 ? 'men' : 'women'}/${i + 5}.jpg`} 
                               alt="User" 
-                              className="w-10 h-10 rounded-full object-cover"
+                              className="w-8 h-8 rounded-full object-cover"
                             />
-                            <div className="flex-grow">
-                              <div className="font-medium text-sm">Session with User {i + 1}</div>
+                            <div className="flex-grow min-w-0">
+                              <div className="font-medium text-xs">Session with User {i + 1}</div>
                               <div className="text-xs text-muted-foreground">
                                 {i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : 'Friday'}, {1 + i}:00 PM
                               </div>
                             </div>
-                            <div className="flex gap-1">
-                              <Button variant="outline" size="sm" className="h-7 text-xs">
+                            <div className="flex gap-1 shrink-0">
+                              <Button variant="outline" size="sm" className="h-6 text-xs px-2">
                                 Message
                               </Button>
-                              <Button className="bg-cobalt-600 hover:bg-cobalt-700 h-7 text-xs">
+                              <Button className="bg-cobalt-600 hover:bg-cobalt-700 h-6 text-xs px-2">
                                 Join
                               </Button>
                             </div>
@@ -325,10 +327,10 @@ export default function Dashboard() {
                       <div key={i} className="p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
                         <div className="flex items-center">
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 
-                            ${i === 0 ? "bg-cobalt-100 text-cobalt-600" : 
+                            ${i === 0 ? "bg-navy-100 text-navy-600" : 
                               i === 1 ? "bg-purple-100 text-purple-600" :
                               i === 2 ? "bg-amber-100 text-amber-600" :
-                              i === 3 ? "bg-blue-100 text-blue-600" :
+                              i === 3 ? "bg-cobalt-100 text-cobalt-600" :
                               "bg-red-100 text-red-600"}`
                           }>
                             {i === 0 ? <Calendar className="h-4 w-4" /> :
@@ -380,9 +382,9 @@ export default function Dashboard() {
                     <Button variant="outline" size="sm" className="h-7 text-xs">Mark all as read</Button>
                   </div>
                   <div className="space-y-3">
-                    <div className="bg-cobalt-50 p-3 rounded-lg border-l-3 border-cobalt-500">
+                    <div className="bg-navy-50 p-3 rounded-lg border-l-4 border-navy-500">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-cobalt-100 text-cobalt-600 flex items-center justify-center mr-3">
+                        <div className="w-8 h-8 rounded-full bg-navy-100 text-navy-600 flex items-center justify-center mr-3">
                           <Bell className="h-4 w-4" />
                         </div>
                         <div>
@@ -393,13 +395,13 @@ export default function Dashboard() {
                       </div>
                       <div className="mt-2 ml-11 flex gap-2">
                         <Button variant="outline" size="sm" className="h-7 text-xs">View Profile</Button>
-                        <Button size="sm" className="bg-cobalt-600 hover:bg-cobalt-700 h-7 text-xs">Accept</Button>
+                        <Button size="sm" className="bg-navy-600 hover:bg-navy-700 h-7 text-xs">Accept</Button>
                       </div>
                     </div>
                     
-                    <div className="bg-cobalt-50 p-3 rounded-lg border-l-3 border-cobalt-500">
+                    <div className="bg-cobalt-50 p-3 rounded-lg border-l-4 border-cobalt-500">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3">
+                        <div className="w-8 h-8 rounded-full bg-cobalt-100 text-cobalt-600 flex items-center justify-center mr-3">
                           <MessageSquare className="h-4 w-4" />
                         </div>
                         <div>
@@ -413,7 +415,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                     
-                    <div className="bg-cobalt-50 p-3 rounded-lg border-l-3 border-cobalt-500">
+                    <div className="bg-amber-50 p-3 rounded-lg border-l-4 border-amber-500">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mr-3">
                           <Calendar className="h-4 w-4" />
@@ -426,7 +428,7 @@ export default function Dashboard() {
                       </div>
                       <div className="mt-2 ml-11 flex gap-2">
                         <Button variant="outline" size="sm" className="h-7 text-xs">Reschedule</Button>
-                        <Button size="sm" className="bg-cobalt-600 hover:bg-cobalt-700 h-7 text-xs">Confirm</Button>
+                        <Button size="sm" className="bg-navy-600 hover:bg-navy-700 h-7 text-xs">Confirm</Button>
                       </div>
                     </div>
                     
@@ -466,7 +468,6 @@ export default function Dashboard() {
             
             {/* Resources Tab */}
             {activeTab === 'resources' && (
-              
               <div className="grid grid-cols-1 gap-6">
                 <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
                   <h3 className="text-lg font-medium mb-3 text-navy-900">Learning Resources</h3>
@@ -491,7 +492,7 @@ export default function Dashboard() {
                           }
                         </div>
                         <div className="mt-2 flex">
-                          <div className="text-xs text-cobalt-600 mr-2">{Math.floor(Math.random() * 8) + 3} min read</div>
+                          <div className="text-xs text-navy-600 mr-2">{Math.floor(Math.random() * 8) + 3} min read</div>
                           <div className="text-xs text-muted-foreground">{Math.floor(Math.random() * 600) + 100} reads</div>
                         </div>
                         <div className="mt-2">
@@ -501,7 +502,7 @@ export default function Dashboard() {
                     ))}
                   </div>
                   <div className="mt-3 pt-3 border-t border-gray-100 text-center">
-                    <Link to="/knowledge-hub" className="text-xs text-cobalt-600 hover:text-cobalt-700 font-medium">
+                    <Link to="/knowledge-hub" className="text-xs text-navy-600 hover:text-navy-700 font-medium">
                       Browse all resources →
                     </Link>
                   </div>
