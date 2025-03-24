@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Search, BookOpen, Video, Newspaper, Calendar, ArrowRight, BookMarked } from "lucide-react";
 import { motion } from "framer-motion";
 
-// Mock articles
 const MOCK_ARTICLES = [
   {
     id: "1",
@@ -109,7 +107,6 @@ const MOCK_ARTICLES = [
   }
 ];
 
-// Mock events
 const MOCK_EVENTS = [
   {
     id: "1",
@@ -144,7 +141,6 @@ export default function KnowledgeHub() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
   
-  // Filter content based on search and active tab
   const filteredContent = MOCK_ARTICLES.filter(item => {
     const matchesSearch = searchQuery === "" || 
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -159,7 +155,6 @@ export default function KnowledgeHub() {
     return matchesSearch && matchesTab;
   });
   
-  // Filter events
   const filteredEvents = MOCK_EVENTS.filter(event => 
     searchQuery === "" || 
     event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -167,7 +162,6 @@ export default function KnowledgeHub() {
     event.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
   
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -186,7 +180,7 @@ export default function KnowledgeHub() {
       <Navbar />
       
       <main className="flex-grow pt-24">
-        <section className="bg-teal-600 py-16">
+        <section className="bg-cobalt-600 py-16">
           <div className="container mx-auto px-4 sm:px-6">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -212,12 +206,12 @@ export default function KnowledgeHub() {
                 <Input
                   type="text"
                   placeholder="Search articles, videos, news, and events..."
-                  className="w-full h-14 px-6 py-4 border-0 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-300"
+                  className="w-full h-14 px-6 py-4 border-0 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-cobalt-300"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
                 <button 
-                  className="absolute right-3 top-3 bg-teal-700 hover:bg-teal-800 text-white p-2 rounded-full transition-colors duration-200"
+                  className="absolute right-3 top-3 bg-cobalt-700 hover:bg-cobalt-800 text-white p-2 rounded-full transition-colors duration-200"
                   aria-label="Search"
                 >
                   <Search className="h-5 w-5" />
@@ -232,24 +226,24 @@ export default function KnowledgeHub() {
             <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab} className="w-full">
               <div className="flex justify-between items-center mb-8">
                 <TabsList className="bg-gray-100">
-                  <TabsTrigger value="all" className="data-[state=active]:bg-teal-600 data-[state=active]:text-white">
+                  <TabsTrigger value="all" className="data-[state=active]:bg-cobalt-600 data-[state=active]:text-white">
                     All
                   </TabsTrigger>
-                  <TabsTrigger value="articles" className="data-[state=active]:bg-teal-600 data-[state=active]:text-white">
+                  <TabsTrigger value="articles" className="data-[state=active]:bg-cobalt-600 data-[state=active]:text-white">
                     <BookOpen className="h-4 w-4 mr-2" />
                     Articles
                   </TabsTrigger>
-                  <TabsTrigger value="videos" className="data-[state=active]:bg-teal-600 data-[state=active]:text-white">
+                  <TabsTrigger value="videos" className="data-[state=active]:bg-cobalt-600 data-[state=active]:text-white">
                     <Video className="h-4 w-4 mr-2" />
                     Videos
                   </TabsTrigger>
-                  <TabsTrigger value="news" className="data-[state=active]:bg-teal-600 data-[state=active]:text-white">
+                  <TabsTrigger value="news" className="data-[state=active]:bg-cobalt-600 data-[state=active]:text-white">
                     <Newspaper className="h-4 w-4 mr-2" />
                     News
                   </TabsTrigger>
                 </TabsList>
                 
-                <Button variant="ghost" className="text-teal-600 hover:text-teal-800 hover:bg-teal-50">
+                <Button variant="ghost" className="text-cobalt-600 hover:text-cobalt-800 hover:bg-cobalt-50">
                   Browse All
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -278,7 +272,7 @@ export default function KnowledgeHub() {
                           </div>
                           <CardHeader>
                             <div className="flex justify-between items-center mb-2">
-                              <span className="text-xs font-medium text-teal-600 uppercase">{item.category}</span>
+                              <span className="text-xs font-medium text-cobalt-600 uppercase">{item.category}</span>
                               <span className="text-xs text-gray-500">{item.date}</span>
                             </div>
                             <CardTitle className="text-lg">{item.title}</CardTitle>
@@ -299,7 +293,7 @@ export default function KnowledgeHub() {
                             </div>
                           </CardContent>
                           <CardFooter>
-                            <Button variant="outline" className="w-full text-teal-600 border-teal-200 hover:bg-teal-50">
+                            <Button variant="outline" className="w-full text-cobalt-600 border-cobalt-200 hover:bg-cobalt-50">
                               {item.type === "video" ? "Watch Video" : "Read More"}
                             </Button>
                           </CardFooter>
@@ -319,7 +313,6 @@ export default function KnowledgeHub() {
               </TabsContent>
               
               <TabsContent value="articles" className="mt-0">
-                {/* Same structure as "all" tab but filtered to articles only */}
                 {filteredContent.length > 0 ? (
                   <motion.div 
                     variants={containerVariants}
@@ -330,7 +323,6 @@ export default function KnowledgeHub() {
                     {filteredContent.map((item) => (
                       <motion.div key={item.id} variants={itemVariants}>
                         <Card className="overflow-hidden h-full flex flex-col">
-                          {/* Same card structure as above */}
                           <div className="relative h-48 overflow-hidden">
                             <img 
                               src={item.image} 
@@ -343,7 +335,7 @@ export default function KnowledgeHub() {
                           </div>
                           <CardHeader>
                             <div className="flex justify-between items-center mb-2">
-                              <span className="text-xs font-medium text-teal-600 uppercase">{item.category}</span>
+                              <span className="text-xs font-medium text-cobalt-600 uppercase">{item.category}</span>
                               <span className="text-xs text-gray-500">{item.date}</span>
                             </div>
                             <CardTitle className="text-lg">{item.title}</CardTitle>
@@ -364,7 +356,7 @@ export default function KnowledgeHub() {
                             </div>
                           </CardContent>
                           <CardFooter>
-                            <Button variant="outline" className="w-full text-teal-600 border-teal-200 hover:bg-teal-50">
+                            <Button variant="outline" className="w-full text-cobalt-600 border-cobalt-200 hover:bg-cobalt-50">
                               Read More
                             </Button>
                           </CardFooter>
@@ -384,7 +376,6 @@ export default function KnowledgeHub() {
               </TabsContent>
               
               <TabsContent value="videos" className="mt-0">
-                {/* Similar structure for videos tab */}
                 {filteredContent.length > 0 ? (
                   <motion.div 
                     variants={containerVariants}
@@ -395,7 +386,6 @@ export default function KnowledgeHub() {
                     {filteredContent.map((item) => (
                       <motion.div key={item.id} variants={itemVariants}>
                         <Card className="overflow-hidden h-full flex flex-col">
-                          {/* Similar card content for videos */}
                           <div className="relative h-48 overflow-hidden">
                             <img 
                               src={item.image} 
@@ -413,7 +403,7 @@ export default function KnowledgeHub() {
                           </div>
                           <CardHeader>
                             <div className="flex justify-between items-center mb-2">
-                              <span className="text-xs font-medium text-teal-600 uppercase">{item.category}</span>
+                              <span className="text-xs font-medium text-cobalt-600 uppercase">{item.category}</span>
                               <span className="text-xs text-gray-500">{item.date}</span>
                             </div>
                             <CardTitle className="text-lg">{item.title}</CardTitle>
@@ -434,7 +424,7 @@ export default function KnowledgeHub() {
                             </div>
                           </CardContent>
                           <CardFooter>
-                            <Button variant="outline" className="w-full text-teal-600 border-teal-200 hover:bg-teal-50">
+                            <Button variant="outline" className="w-full text-cobalt-600 border-cobalt-200 hover:bg-cobalt-50">
                               Watch Video
                             </Button>
                           </CardFooter>
@@ -454,7 +444,6 @@ export default function KnowledgeHub() {
               </TabsContent>
               
               <TabsContent value="news" className="mt-0">
-                {/* Similar structure for news tab */}
                 {filteredContent.length > 0 ? (
                   <motion.div 
                     variants={containerVariants}
@@ -465,7 +454,6 @@ export default function KnowledgeHub() {
                     {filteredContent.map((item) => (
                       <motion.div key={item.id} variants={itemVariants}>
                         <Card className="overflow-hidden h-full flex flex-col">
-                          {/* Similar card content for news */}
                           <div className="relative h-48 overflow-hidden">
                             <img 
                               src={item.image} 
@@ -478,7 +466,7 @@ export default function KnowledgeHub() {
                           </div>
                           <CardHeader>
                             <div className="flex justify-between items-center mb-2">
-                              <span className="text-xs font-medium text-teal-600 uppercase">{item.category}</span>
+                              <span className="text-xs font-medium text-cobalt-600 uppercase">{item.category}</span>
                               <span className="text-xs text-gray-500">{item.date}</span>
                             </div>
                             <CardTitle className="text-lg">{item.title}</CardTitle>
@@ -497,7 +485,7 @@ export default function KnowledgeHub() {
                             </div>
                           </CardContent>
                           <CardFooter>
-                            <Button variant="outline" className="w-full text-teal-600 border-teal-200 hover:bg-teal-50">
+                            <Button variant="outline" className="w-full text-cobalt-600 border-cobalt-200 hover:bg-cobalt-50">
                               Read More
                             </Button>
                           </CardFooter>
@@ -517,11 +505,10 @@ export default function KnowledgeHub() {
               </TabsContent>
             </Tabs>
             
-            {/* Upcoming Events Section */}
             <div className="mt-16">
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-2xl font-display font-medium">Upcoming Events</h2>
-                <Button variant="ghost" className="text-teal-600 hover:text-teal-800 hover:bg-teal-50">
+                <Button variant="ghost" className="text-cobalt-600 hover:text-cobalt-800 hover:bg-cobalt-50">
                   View All Events
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -544,14 +531,14 @@ export default function KnowledgeHub() {
                             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                           />
                           <div className="absolute top-3 left-3">
-                            <div className="bg-teal-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+                            <div className="bg-cobalt-600 text-white px-3 py-1 rounded-full text-xs font-medium">
                               Event
                             </div>
                           </div>
                         </div>
                         <CardHeader>
                           <div className="flex items-center mb-2">
-                            <Calendar className="h-4 w-4 text-teal-600 mr-2" />
+                            <Calendar className="h-4 w-4 text-cobalt-600 mr-2" />
                             <span className="text-sm text-gray-700">{event.date} • {event.time}</span>
                           </div>
                           <CardTitle className="text-lg">{event.title}</CardTitle>
@@ -565,7 +552,7 @@ export default function KnowledgeHub() {
                           </p>
                         </CardContent>
                         <CardFooter>
-                          <Button variant="outline" className="w-full text-teal-600 border-teal-200 hover:bg-teal-50">
+                          <Button variant="outline" className="w-full text-cobalt-600 border-cobalt-200 hover:bg-cobalt-50">
                             Register Now
                           </Button>
                         </CardFooter>

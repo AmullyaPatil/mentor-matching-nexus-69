@@ -101,13 +101,13 @@ export default function Community() {
       <Navbar />
       
       <main className="flex-grow pt-24">
-        <section className="bg-gradient-to-br from-teal-50 to-teal-100 py-16">
+        <section className="bg-gradient-to-br from-navy-50 to-cobalt-100 py-16">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center max-w-3xl mx-auto mb-8">
-              <h1 className="text-3xl md:text-4xl font-display font-medium mb-4 text-teal-900">
+              <h1 className="text-3xl md:text-4xl font-display font-medium mb-4 text-navy-900">
                 Community Hub
               </h1>
-              <p className="text-lg text-teal-700">
+              <p className="text-lg text-navy-700">
                 Connect, share knowledge, and grow with other startup enthusiasts
               </p>
             </div>
@@ -117,11 +117,11 @@ export default function Community() {
               <Input
                 type="text"
                 placeholder="Search posts, topics, or keywords..."
-                className="pl-10 h-12 rounded-full border-teal-200 focus:border-teal-400 focus:ring focus:ring-teal-300 focus:ring-opacity-50"
+                className="pl-10 h-12 rounded-full border-cobalt-200 focus:border-cobalt-400 focus:ring focus:ring-cobalt-300 focus:ring-opacity-50"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-teal-500 h-5 w-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-cobalt-500 h-5 w-5" />
             </div>
           </div>
         </section>
@@ -134,16 +134,16 @@ export default function Community() {
                 {/* New post form */}
                 {user && (
                   <div className="mb-8 p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
-                    <h2 className="text-xl font-medium mb-4 text-teal-900">Share your thoughts</h2>
+                    <h2 className="text-xl font-medium mb-4 text-navy-900">Share your thoughts</h2>
                     <div className="mb-4">
                       <Input 
                         placeholder="Post title"
                         value={postTitle}
                         onChange={(e) => setPostTitle(e.target.value)}
-                        className="mb-3 focus:border-teal-400 focus:ring focus:ring-teal-300 focus:ring-opacity-50"
+                        className="mb-3 focus:border-cobalt-400 focus:ring focus:ring-cobalt-300 focus:ring-opacity-50"
                       />
                       <textarea 
-                        className="w-full p-4 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full p-4 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-cobalt-500"
                         rows={4}
                         placeholder="What's on your mind?"
                         value={postContent}
@@ -160,12 +160,12 @@ export default function Community() {
                             <div key={index} className="flex items-center p-2 bg-white rounded border border-gray-200 group">
                               {attachment.type === 'image' ? (
                                 <>
-                                  <Image className="h-4 w-4 text-teal-600 mr-2" />
+                                  <Image className="h-4 w-4 text-cobalt-600 mr-2" />
                                   <span className="text-sm truncate flex-grow">{attachment.file.name}</span>
                                 </>
                               ) : (
                                 <>
-                                  <FileText className="h-4 w-4 text-teal-600 mr-2" />
+                                  <FileText className="h-4 w-4 text-cobalt-600 mr-2" />
                                   <span className="text-sm truncate flex-grow">{attachment.file.name}</span>
                                 </>
                               )}
@@ -194,7 +194,7 @@ export default function Community() {
                           variant="outline"
                           size="sm"
                           onClick={() => imageInputRef.current?.click()}
-                          className="flex items-center border-teal-200 text-teal-700 hover:bg-teal-50"
+                          className="flex items-center border-cobalt-200 text-cobalt-700 hover:bg-cobalt-50"
                         >
                           <Image className="h-4 w-4 mr-2" />
                           Add Image
@@ -210,7 +210,7 @@ export default function Community() {
                           variant="outline"
                           size="sm"
                           onClick={() => fileInputRef.current?.click()}
-                          className="flex items-center border-teal-200 text-teal-700 hover:bg-teal-50"
+                          className="flex items-center border-cobalt-200 text-cobalt-700 hover:bg-cobalt-50"
                         >
                           <Paperclip className="h-4 w-4 mr-2" />
                           Add File
@@ -219,7 +219,7 @@ export default function Community() {
                       
                       <Button 
                         onClick={handlePostSubmit}
-                        className="bg-teal-600 hover:bg-teal-700"
+                        className="bg-cobalt-600 hover:bg-cobalt-700"
                       >
                         Post
                       </Button>
@@ -233,7 +233,7 @@ export default function Community() {
                     <button
                       className={`pb-4 text-sm font-medium ${
                         activeTab === 'featured'
-                          ? 'text-teal-600 border-b-2 border-teal-600'
+                          ? 'text-cobalt-600 border-b-2 border-cobalt-600'
                           : 'text-gray-500 hover:text-gray-700'
                       }`}
                       onClick={() => handleTabChange('featured')}
@@ -243,7 +243,7 @@ export default function Community() {
                     <button
                       className={`pb-4 text-sm font-medium ${
                         activeTab === 'recent'
-                          ? 'text-teal-600 border-b-2 border-teal-600'
+                          ? 'text-cobalt-600 border-b-2 border-cobalt-600'
                           : 'text-gray-500 hover:text-gray-700'
                       }`}
                       onClick={() => handleTabChange('recent')}
@@ -253,7 +253,7 @@ export default function Community() {
                     <button
                       className={`pb-4 text-sm font-medium ${
                         activeTab === 'popular'
-                          ? 'text-teal-600 border-b-2 border-teal-600'
+                          ? 'text-cobalt-600 border-b-2 border-cobalt-600'
                           : 'text-gray-500 hover:text-gray-700'
                       }`}
                       onClick={() => handleTabChange('popular')}
@@ -288,7 +288,7 @@ export default function Community() {
               <div className="lg:w-1/3 space-y-6">
                 {/* Community stats */}
                 <div className="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
-                  <h3 className="text-lg font-medium mb-4 text-teal-900">Community Stats</h3>
+                  <h3 className="text-lg font-medium mb-4 text-navy-900">Community Stats</h3>
                   <div className="space-y-4">
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Members</span>
@@ -307,7 +307,7 @@ export default function Community() {
 
                 {/* Featured members */}
                 <div className="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
-                  <h3 className="text-lg font-medium mb-4 text-teal-900">Featured Members</h3>
+                  <h3 className="text-lg font-medium mb-4 text-navy-900">Featured Members</h3>
                   <div className="space-y-4">
                     {MOCK_USERS.slice(0, 3).map((user) => (
                       <div key={user.id} className="flex items-center">
@@ -324,7 +324,7 @@ export default function Community() {
                     ))}
                   </div>
                   <div className="mt-4 pt-4 border-t border-gray-100">
-                    <a href="/search" className="text-sm text-teal-600 hover:text-teal-700 font-medium">
+                    <a href="/search" className="text-sm text-cobalt-600 hover:text-cobalt-700 font-medium">
                       View all members →
                     </a>
                   </div>
@@ -332,14 +332,14 @@ export default function Community() {
 
                 {/* Trending topics */}
                 <div className="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
-                  <h3 className="text-lg font-medium mb-4 text-teal-900">Trending Topics</h3>
+                  <h3 className="text-lg font-medium mb-4 text-navy-900">Trending Topics</h3>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-sm">#fundraising</span>
-                    <span className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-sm">#productmarket</span>
-                    <span className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-sm">#seed</span>
-                    <span className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-sm">#ux</span>
-                    <span className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-sm">#saas</span>
-                    <span className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-sm">#growth</span>
+                    <span className="px-3 py-1 bg-cobalt-50 text-cobalt-700 rounded-full text-sm">#fundraising</span>
+                    <span className="px-3 py-1 bg-cobalt-50 text-cobalt-700 rounded-full text-sm">#productmarket</span>
+                    <span className="px-3 py-1 bg-cobalt-50 text-cobalt-700 rounded-full text-sm">#seed</span>
+                    <span className="px-3 py-1 bg-cobalt-50 text-cobalt-700 rounded-full text-sm">#ux</span>
+                    <span className="px-3 py-1 bg-cobalt-50 text-cobalt-700 rounded-full text-sm">#saas</span>
+                    <span className="px-3 py-1 bg-cobalt-50 text-cobalt-700 rounded-full text-sm">#growth</span>
                   </div>
                 </div>
               </div>
