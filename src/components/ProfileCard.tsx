@@ -45,6 +45,9 @@ export default function ProfileCard({
   const [showActions, setShowActions] = useState(false);
   const skills = expertise || interests || [];
   
+  // Ensure rating is a number to avoid "toFixed is not a function" error
+  const ratingValue = typeof rating === 'number' ? rating : 4.5;
+  
   if (compact) {
     return (
       <div className="p-4 rounded-xl border border-navy-100 bg-white hover:shadow-md transition-all duration-300 hover:border-cobalt-300 card-hover h-full flex space-x-4 relative">
@@ -67,16 +70,16 @@ export default function ProfileCard({
               {bio}
             </p>
             
-            {/* Add rating to compact view */}
+            {/* Rating with proper number check */}
             <div className="flex items-center mt-1 text-yellow-500">
               {Array.from({ length: 5 }).map((_, index) => (
                 <Star 
                   key={index} 
-                  className={`h-3 w-3 ${index < Math.floor(rating) ? "fill-yellow-500" : "fill-navy-200"}`} 
+                  className={`h-3 w-3 ${index < Math.floor(ratingValue) ? "fill-yellow-500" : "fill-navy-200"}`} 
                 />
               ))}
               <span className="ml-1 text-xs text-navy-600">
-                {rating.toFixed(1)}
+                {ratingValue.toFixed(1)}
               </span>
             </div>
           </div>
@@ -148,16 +151,16 @@ export default function ProfileCard({
                 {USER_ROLE_LABELS[role]}
               </Badge>
               
-              {/* Always show rating */}
+              {/* Rating with proper number check */}
               <div className="flex items-center mt-1 text-yellow-500">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <Star 
                     key={index} 
-                    className={`h-4 w-4 ${index < Math.floor(rating) ? "fill-yellow-500" : "fill-navy-200"}`} 
+                    className={`h-4 w-4 ${index < Math.floor(ratingValue) ? "fill-yellow-500" : "fill-navy-200"}`} 
                   />
                 ))}
                 <span className="ml-1 text-sm text-navy-600">
-                  {rating.toFixed(1)}
+                  {ratingValue.toFixed(1)}
                 </span>
               </div>
             </div>
