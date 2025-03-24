@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -348,21 +349,21 @@ export default function ProfileView() {
         <div className="flex flex-col items-center justify-center min-h-[50vh]">
           <div className="animate-pulse space-y-8 w-full max-w-4xl">
             <div className="flex space-x-6">
-              <div className="rounded-full bg-blue-100 h-32 w-32"></div>
+              <div className="rounded-full bg-cobalt-100 h-32 w-32"></div>
               <div className="flex-1 space-y-4">
-                <div className="h-8 bg-blue-100 rounded w-3/4"></div>
-                <div className="h-6 bg-blue-100 rounded w-1/4"></div>
-                <div className="h-4 bg-blue-100 rounded w-5/6"></div>
+                <div className="h-8 bg-cobalt-100 rounded w-3/4"></div>
+                <div className="h-6 bg-cobalt-100 rounded w-1/4"></div>
+                <div className="h-4 bg-cobalt-100 rounded w-5/6"></div>
               </div>
             </div>
             <div className="space-y-3">
-              <div className="h-4 bg-blue-100 rounded"></div>
-              <div className="h-4 bg-blue-100 rounded w-5/6"></div>
-              <div className="h-4 bg-blue-100 rounded w-4/6"></div>
+              <div className="h-4 bg-cobalt-100 rounded"></div>
+              <div className="h-4 bg-cobalt-100 rounded w-5/6"></div>
+              <div className="h-4 bg-cobalt-100 rounded w-4/6"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="h-48 bg-blue-100 rounded"></div>
-              <div className="h-48 bg-blue-100 rounded"></div>
+              <div className="h-48 bg-cobalt-100 rounded"></div>
+              <div className="h-48 bg-cobalt-100 rounded"></div>
             </div>
           </div>
         </div>
@@ -376,7 +377,7 @@ export default function ProfileView() {
         <div className="flex flex-col items-center justify-center min-h-[50vh]">
           <h2 className="text-2xl font-semibold text-gray-800">Profile not found</h2>
           <p className="text-muted-foreground mt-2">The profile you're looking for doesn't exist or has been removed.</p>
-          <Button onClick={goBack} className="mt-6 bg-teal-600 hover:bg-teal-700">
+          <Button onClick={goBack} className="mt-6 bg-cobalt-600 hover:bg-cobalt-700">
             <ArrowLeft className="mr-2 h-4 w-4" /> Go Back
           </Button>
         </div>
@@ -387,13 +388,13 @@ export default function ProfileView() {
   return (
     <div className="container max-w-6xl mx-auto py-8 px-4">
       <div className="mb-4">
-        <Button onClick={goBack} className="flex items-center text-teal-700 hover:text-teal-800 bg-transparent hover:bg-teal-50">
+        <Button onClick={goBack} className="flex items-center text-cobalt-700 hover:text-cobalt-800 bg-transparent hover:bg-cobalt-50">
           <ArrowLeft className="mr-2 h-4 w-4" /> Back
         </Button>
       </div>
       
       <div className="bg-white rounded-xl shadow-md overflow-hidden mb-8">
-        <div className="bg-teal-50 p-8">
+        <div className="bg-cobalt-50 p-8">
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <img
               src={profile.avatar}
@@ -403,32 +404,33 @@ export default function ProfileView() {
             <div className="flex-1">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                  <h1 className="text-3xl font-bold text-teal-900">{profile.name}</h1>
+                  <h1 className="text-3xl font-bold text-cobalt-900">{profile.name}</h1>
                   <div className="flex items-center mt-1">
-                    <Badge className="bg-teal-600 hover:bg-teal-700 mr-2">
+                    <Badge className="bg-cobalt-600 hover:bg-cobalt-700 mr-2">
                       {USER_ROLE_LABELS[profile.role]}
                     </Badge>
-                    <div className="flex items-center text-teal-700">
+                    <div className="flex items-center text-cobalt-700">
                       <MapPin className="h-4 w-4 mr-1" />
                       <span className="text-sm">{profile.location}</span>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center bg-teal-100 px-3 py-1 rounded-full text-teal-800">
+                  <div className="flex items-center bg-cobalt-100 px-3 py-1 rounded-full text-cobalt-800">
                     <Users className="h-4 w-4 mr-1" />
                     <span className="text-sm font-medium">{profile.connections} connections</span>
                   </div>
-                  <Button variant="outline" className="border-teal-300 text-teal-700 hover:bg-teal-50">
+                  <Button variant="outline" className="border-cobalt-300 text-cobalt-700 hover:bg-cobalt-50">
                     Connect
                   </Button>
-                  <Button className="bg-teal-600 hover:bg-teal-700">
+                  <Button className="bg-cobalt-600 hover:bg-cobalt-700">
                     Message
                   </Button>
                 </div>
               </div>
-              <p className="mt-4 text-teal-800">{profile.bio}</p>
+              <p className="mt-4 text-cobalt-800">{profile.bio}</p>
               
+              {/* Badge Images Section */}
               <div className="mt-4 flex flex-wrap gap-2">
                 {profile.milestones.map((milestone, index) => (
                   <Badge key={index} variant={milestone.type as any} className="flex items-center px-3 py-1">
@@ -440,7 +442,7 @@ export default function ProfileView() {
               
               <div className="mt-4 flex flex-wrap gap-2">
                 {profile.expertise.map((skill, index) => (
-                  <Badge key={index} variant="outline" className="bg-white border-teal-200 text-teal-700">
+                  <Badge key={index} variant="outline" className="bg-white border-cobalt-200 text-cobalt-700">
                     {skill}
                   </Badge>
                 ))}
@@ -450,7 +452,7 @@ export default function ProfileView() {
         </div>
 
         <Tabs defaultValue="about" className="p-6">
-          <TabsList className="bg-teal-50">
+          <TabsList className="bg-cobalt-50">
             <TabsTrigger value="about">About</TabsTrigger>
             <TabsTrigger value="services">Connection Services</TabsTrigger>
             <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
@@ -465,6 +467,31 @@ export default function ProfileView() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-700 whitespace-pre-line">{profile.about}</p>
+                    
+                    {/* Achievement Badges */}
+                    <div className="mt-6">
+                      <h3 className="text-lg font-medium mb-4 text-cobalt-700">Badges & Achievements</h3>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        {profile.milestones.map((milestone, index) => (
+                          <div key={index} className="flex flex-col items-center text-center">
+                            <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-2 
+                              ${milestone.type === 'achievement' ? 'bg-amber-100' : 
+                                milestone.type === 'milestone' ? 'bg-purple-100' : 
+                                milestone.type === 'verified' ? 'bg-green-100' : 
+                                milestone.type === 'pro' ? 'bg-blue-100' : 'bg-red-100'}`}>
+                              <span className="text-2xl">
+                                {milestone.type === 'achievement' ? <Award className="h-8 w-8 text-amber-600" /> : 
+                                  milestone.type === 'milestone' ? <Users className="h-8 w-8 text-purple-600" /> : 
+                                  milestone.type === 'verified' ? <Shield className="h-8 w-8 text-green-600" /> : 
+                                  milestone.type === 'pro' ? <Medal className="h-8 w-8 text-blue-600" /> : 
+                                  <Trophy className="h-8 w-8 text-red-600" />}
+                              </span>
+                            </div>
+                            <span className="text-sm font-medium text-cobalt-800">{milestone.title}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
@@ -474,7 +501,7 @@ export default function ProfileView() {
                   <Card>
                     <CardHeader className="pb-3">
                       <CardTitle className="text-lg flex items-center">
-                        <Briefcase className="mr-2 h-5 w-5 text-teal-600" />
+                        <Briefcase className="mr-2 h-5 w-5 text-cobalt-600" />
                         Current Position
                       </CardTitle>
                     </CardHeader>
@@ -489,7 +516,7 @@ export default function ProfileView() {
                   <Card>
                     <CardHeader className="pb-3">
                       <CardTitle className="text-lg flex items-center">
-                        <BookOpen className="mr-2 h-5 w-5 text-teal-600" />
+                        <BookOpen className="mr-2 h-5 w-5 text-cobalt-600" />
                         Education
                       </CardTitle>
                     </CardHeader>
@@ -506,13 +533,13 @@ export default function ProfileView() {
                 <Card>
                   <CardHeader className="pb-3">
                     <CardTitle className="text-lg flex items-center">
-                      <Award className="mr-2 h-5 w-5 text-teal-600" />
+                      <Award className="mr-2 h-5 w-5 text-cobalt-600" />
                       Experience
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center gap-3">
-                      <div className="bg-teal-100 text-teal-800 font-semibold rounded-full h-14 w-14 flex items-center justify-center">
+                      <div className="bg-cobalt-100 text-cobalt-800 font-semibold rounded-full h-14 w-14 flex items-center justify-center">
                         {profile.yearsOfExperience}+
                       </div>
                       <div>
@@ -529,26 +556,26 @@ export default function ProfileView() {
           <TabsContent value="services" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {profile.connectionServices.map((service) => (
-                <Card key={service.id} className="overflow-hidden border-teal-100 hover:border-teal-300 transition-all">
-                  <div className="bg-teal-50 p-4">
+                <Card key={service.id} className="overflow-hidden border-cobalt-100 hover:border-cobalt-300 transition-all">
+                  <div className="bg-cobalt-50 p-4">
                     <div className="flex items-center gap-3">
-                      <div className="bg-teal-600 text-white rounded-full p-2">
+                      <div className="bg-cobalt-600 text-white rounded-full p-2">
                         {service.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-teal-900">{service.name}</h3>
-                        <p className="text-sm text-teal-700">{service.duration}</p>
+                        <h3 className="font-semibold text-cobalt-900">{service.name}</h3>
+                        <p className="text-sm text-cobalt-700">{service.duration}</p>
                       </div>
                     </div>
                   </div>
                   <CardContent className="pt-4">
                     <p className="text-gray-700 mb-4">{service.description}</p>
-                    <p className="text-xl font-bold text-teal-800">${service.price}</p>
+                    <p className="text-xl font-bold text-cobalt-800">${service.price}</p>
                   </CardContent>
                   <CardFooter className="border-t bg-gray-50 py-3">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button className="w-full bg-teal-600 hover:bg-teal-700">Book Now</Button>
+                        <Button className="w-full bg-cobalt-600 hover:bg-cobalt-700">Book Now</Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-md">
                         <DialogHeader>
@@ -574,7 +601,7 @@ export default function ProfileView() {
                           <h4 className="font-semibold mt-4 mb-2">Service Details</h4>
                           <p className="text-sm text-muted-foreground mb-4">{service.description}</p>
                           
-                          <div className="bg-teal-50 p-4 rounded-md">
+                          <div className="bg-cobalt-50 p-4 rounded-md">
                             <div className="flex justify-between mb-2">
                               <span>Service Fee</span>
                               <span className="font-semibold">${service.price}</span>
@@ -591,9 +618,9 @@ export default function ProfileView() {
                         </div>
                         
                         <DialogFooter>
-                          <Button variant="outline" className="border-teal-200">Cancel</Button>
+                          <Button variant="outline" className="border-cobalt-200">Cancel</Button>
                           <Button 
-                            className="bg-teal-600 hover:bg-teal-700"
+                            className="bg-cobalt-600 hover:bg-cobalt-700"
                             onClick={() => handleBookService(service)}
                             disabled={!selectedDate}
                           >
@@ -611,7 +638,7 @@ export default function ProfileView() {
           <TabsContent value="testimonials" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {profile.testimonials.map((testimonial) => (
-                <Card key={testimonial.id} className="border-teal-100">
+                <Card key={testimonial.id} className="border-cobalt-100">
                   <CardHeader className="pb-3">
                     <div className="flex justify-between items-start">
                       <div className="flex items-center gap-3">
